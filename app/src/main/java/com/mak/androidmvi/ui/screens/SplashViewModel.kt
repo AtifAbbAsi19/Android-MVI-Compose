@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel : ViewModel() {
 
-    private val _state = mutableStateOf(SplashState())
+   /* private val _state = mutableStateOf(SplashState())
     val state: State<SplashState> = _state
-
+*/
     private val _effect = Channel<SplashEffect>()
     val effect = _effect.receiveAsFlow()
 
@@ -23,7 +23,7 @@ class SplashViewModel : ViewModel() {
     private fun startTimer() {
         viewModelScope.launch {
             delay(3000) // 3-second splash
-            _state.value = _state.value.copy(isLoading = false)
+            //_state.value = _state.value.copy(isLoading = false)
             _effect.send(SplashEffect.NavigateToAuth)
         }
     }
