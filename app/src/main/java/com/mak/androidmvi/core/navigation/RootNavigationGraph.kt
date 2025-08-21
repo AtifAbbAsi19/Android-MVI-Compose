@@ -1,13 +1,10 @@
 package com.mak.androidmvi.core.navigation
 
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.mak.androidmvi.ui.SplashScreen
 
 
 /**

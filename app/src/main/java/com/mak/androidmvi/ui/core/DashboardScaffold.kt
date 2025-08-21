@@ -54,7 +54,7 @@ fun DashboardScaffold(navController: NavHostController, content: @Composable () 
             modifier = Modifier.fillMaxSize().padding(innerPadding),
             color = MaterialTheme.colorScheme.background
         ) {
-            Box(modifier = Modifier) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 content()
             }
         }
