@@ -29,7 +29,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mak.androidmvi.core.model.BottomNavigationItem
 import com.mak.androidmvi.core.navigation.Destination
 
@@ -62,10 +64,17 @@ fun DashboardScaffold(navController: NavHostController, content: @Composable () 
 @Composable
 fun BottomNavigationBar(selectedIndex: Int, navController: NavHostController){
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(selectedIndex)
     }
 
+  /*  val bottomBarDestination = screens.any { it.route == currentDestination?.route }
+    if (bottomBarDestination) {
+
+    }*/
     NavigationBar {
         getBottomNavigationList().forEachIndexed { index, item ->
             NavigationBarItem(
@@ -75,13 +84,25 @@ fun BottomNavigationBar(selectedIndex: Int, navController: NavHostController){
 
                     when(index){
                         0->{
-                            navController.navigate(Destination.Dashboard.Home)
+                     //todo update right way to update botton nav bar
+                           // navController.navigate(Destination.Dashboard.Home)
+                           navController.navigate(Destination.Dashboard.Home) {
+                                popUpTo(navController.graph.findStartDestination().id)
+                                launchSingleTop = true
+                            }
                         }
                         1->{
-                            navController.navigate(Destination.Dashboard.Profile)
+                            navController.navigate(Destination.Dashboard.Profile) {
+                                popUpTo(navController.graph.findStartDestination().id)
+                                launchSingleTop = true
+                            }
                         }
                         2->{
-                            navController.navigate(Destination.Dashboard.Settings)
+
+                            navController.navigate(Destination.Dashboard.Settings) {
+                                popUpTo(navController.graph.findStartDestination().id)
+                                launchSingleTop = true
+                            }
                         }
                     }
 
