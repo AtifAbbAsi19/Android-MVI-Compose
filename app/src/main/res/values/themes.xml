@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  Splash Screen Cold Start Theme -->
+    <style name="Theme.AppSplashScreen" parent="Theme.SplashScreen" >
+        <!--  Background Color of splash screen -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <!--  Place to add Icon/ Animation , mipmap folder only-->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+         <!--  Theme we must be using after splash screen ends , should be default theme for
+         entire app "Theme.AndroidMvi" mentioned below with main activity-->
+        <item name="postSplashScreenTheme">@style/Theme.AndroidMvi</item>
+
+        <!-- now have to change default theme in manifest.xml -->
+
+    </style>
+
+  <!--  Main activity theme (hot start) -->
+    <style name="Theme.AndroidMvi" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
