@@ -64,8 +64,10 @@ fun DashboardScaffold(navController: NavHostController, content: @Composable () 
 @Composable
 fun BottomNavigationBar(selectedIndex: Int, navController: NavHostController){
 
+    val items = getBottomNavigationList()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+    val currentRoute = navBackStackEntry?.destination
+
 
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(selectedIndex)
@@ -77,35 +79,49 @@ fun BottomNavigationBar(selectedIndex: Int, navController: NavHostController){
     }*/
     NavigationBar {
         getBottomNavigationList().forEachIndexed { index, item ->
+
+            val selected = currentRoute == item.route
+
             NavigationBarItem(
                 selected = selectedItemIndex == index,
                 onClick = {
                     selectedItemIndex = index
 
-                    when(index){
-                        0->{
-                     //todo update right way to update botton nav bar
-                           // navController.navigate(Destination.Dashboard.Home)
-                           navController.navigate(Destination.Dashboard.Home) {
-                                popUpTo(navController.graph.findStartDestination().id)
-                                launchSingleTop = true
-                            }
-                        }
-                        1->{
-                            navController.navigate(Destination.Dashboard.Profile) {
-                                popUpTo(navController.graph.findStartDestination().id)
-                                launchSingleTop = true
-                            }
-                        }
-                        2->{
+                    if (!selected) {
 
-                            navController.navigate(Destination.Dashboard.Settings) {
-                                popUpTo(navController.graph.findStartDestination().id)
-                                launchSingleTop = true
+                        when(index) {
+                            0 -> {
+                                //todo update right way to update botton nav bar
+                                // navController.navigate(Destination.Dashboard.Home)
+                                navController.navigate(Destination.Dashboard.Home) {
+                                    popUpTo(navController.graph.findStartDestination().id)
+                                    launchSingleTop = true
+                                }
                             }
-                        }
-                    }
 
+                            1 -> {
+                                navController.navigate(Destination.Dashboard.Profile) {
+                                    popUpTo(navController.graph.findStartDestination().id)
+                                    launchSingleTop = true
+                                }
+                            }
+
+                            2 -> {
+
+                                navController.navigate(Destination.Dashboard.Settings) {
+                                    popUpTo(navController.graph.findStartDestination().id)
+                                    launchSingleTop = true
+                                }
+                            }
+
+
+                            /*  navController.navigate(item.route) {
+                            // Avoid stacking multiple destinations
+                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                            launchSingleTop = true
+                            //restoreState = true
+                        }*/
+                        }}
                 },
                 label = {
                     Text(text = item.title)
@@ -140,6 +156,7 @@ fun BottomNavigationBar(selectedIndex: Int, navController: NavHostController){
 fun getBottomNavigationList() = listOf(
     BottomNavigationItem(
         title = "Home",
+        route = Destination.Dashboard.Home,
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         hasNews = false,
@@ -147,12 +164,14 @@ fun getBottomNavigationList() = listOf(
     ),
     BottomNavigationItem(
         title = "Services",
+        route = Destination.Dashboard.Search,
         selectedIcon = Icons.Filled.Search,
         unselectedIcon = Icons.Outlined.Search,
         hasNews = false,
     ),
     BottomNavigationItem(
         title = "Chat",
+        route = Destination.Dashboard.Chat,
         selectedIcon = Icons.Filled.Email,
         unselectedIcon = Icons.Outlined.Email,
         hasNews = false,
@@ -160,6 +179,7 @@ fun getBottomNavigationList() = listOf(
     ),
     BottomNavigationItem(
         title = "Settings",
+        route = Destination.Dashboard.Settings,
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings,
         hasNews = true,
