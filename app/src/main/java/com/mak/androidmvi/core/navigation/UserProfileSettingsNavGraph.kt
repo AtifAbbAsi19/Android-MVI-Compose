@@ -12,9 +12,7 @@ fun NavGraphBuilder.userProfileSettingsNavGraph(navController: NavHostController
 
     navigation<Destination.ProfileSettings.Root>(startDestination = Destination.ProfileSettings.UpdateEmail) {
 
-
         composable<Destination.ProfileSettings.UpdateEmail> { UpdateEmailScreen(onBack = { navController.popBackStack() }) }
-
 
           composable<Destination.ProfileSettings.UploadPhoto> { UploadPhotoScreen(onBack = { navController.popBackStack() }) }
 

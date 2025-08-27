@@ -8,15 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ProfileScreen(onUploadPhoto: Any, onUpdateEmail: Any, onUpdatePhone: Any) {
+fun ChatScreen() {
 
 
     Column {
         Text(
             modifier = Modifier.clickable{
-                onUploadPhoto
+
             },
-            text = "Profile",
+            text = "Chat Screen",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )

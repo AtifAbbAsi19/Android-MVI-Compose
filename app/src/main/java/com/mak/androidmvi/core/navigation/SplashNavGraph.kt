@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.mak.androidmvi.ui.screens.SplashScreen
+import com.mak.androidmvi.ui.screens.splash.SplashScreen
 
 fun NavGraphBuilder.splashNavGraph(navController: NavHostController){
 

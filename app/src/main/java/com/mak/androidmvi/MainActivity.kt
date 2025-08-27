@@ -25,27 +25,36 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.model.BottomNavigationItem
 import com.mak.androidmvi.core.navigation.RootNavigationGraph
 import com.mak.androidmvi.ui.theme.AndroidMviTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -61,6 +70,43 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             AndroidMviTheme {
+
+
+                val context = LocalContext.current
+
+                // Initializes a navigation controller to handle navigation between screens.
+                val navController = rememberNavController()
+
+                // Creates a state to manage snackbar messages.
+                val snackbarHostState = remember { SnackbarHostState() }
+
+                // Provides a coroutine scope for displaying snackbar.
+                val coroutineScope = rememberCoroutineScope()
+
+                // Observes global app events from EventManager and reacts accordingly.
+                LaunchedEffect(EventManager) {
+                    lifecycleScope.launch {
+                        // Ensures that event collection only happens while the lifecycle is in the STARTED state.
+                        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            EventManager.eventsFlow.collect { event ->
+                                when (event) {
+                                    is EventManager.AppEvent.ShowSnackbar -> {
+                                        coroutineScope.launch {
+                                          /*  snackbarHostState.showSnackbar(
+                                                context.stringResource(event.message),
+                                                duration = SnackbarDuration.Short
+                                            )*/
+                                        }
+                                    }
+
+                                    else -> { /* No-op for unsupported events */ }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
                 RootNavigationGraph(navController)
             }
         }

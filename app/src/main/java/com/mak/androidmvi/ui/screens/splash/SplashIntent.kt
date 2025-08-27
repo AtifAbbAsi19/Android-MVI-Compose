@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui.screens
+package com.mak.androidmvi.ui.screens.splash
 
 
 sealed class SplashIntent {
