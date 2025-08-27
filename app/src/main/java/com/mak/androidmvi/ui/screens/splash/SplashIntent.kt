@@ -1,6 +1,8 @@
 package com.mak.androidmvi.ui.screens.splash
 
 
-sealed class SplashIntent {
-    object OnTimerFinished : SplashIntent()
+sealed interface SplashIntent {
+    data class ShowLoading(val isLoading: Boolean) : SplashIntent
+    object TriggerTimer : SplashIntent
+    object OnTimerFinished : SplashIntent
 }

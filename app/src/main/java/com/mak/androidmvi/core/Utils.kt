@@ -50,3 +50,32 @@ inline fun <reified T> NavBackStackEntry.getArgs(): T? {
     val json = arguments?.getString("args") ?: return null
     return Json.decodeFromString<T>(URLDecoder.decode(json, "UTF-8"))
 }
+
+/*val backStackEntry by navController.currentBackStackEntryAsState()
+val currentDestination = backStackEntry?.destination?.route
+
+// keep track of previous route to know if it's forward or back
+var previousDestination by remember { mutableStateOf<String?>(null) }
+val isForward = remember(currentDestination) {
+    val forward = previousDestination != null &&
+            previousDestination != currentDestination &&
+            navController.backQueue.any { it.destination.route == previousDestination }
+    previousDestination = currentDestination
+    forward
+}*/
+
+/*   AnimatedContent(
+       targetState = currentDestination,
+       transitionSpec = {
+           if (isForward) {
+               // Forward navigation → enter from right, exit to left
+               (slideInHorizontally { it } + fadeIn()) togetherWith
+                       (slideOutHorizontally { -it } + fadeOut())
+           } else {
+               // Pop/back navigation → enter from left, exit to right
+               (slideInHorizontally { -it } + fadeIn()) togetherWith
+                       (slideOutHorizontally { it } + fadeOut())
+           }
+       }
+   ) {}
+   */

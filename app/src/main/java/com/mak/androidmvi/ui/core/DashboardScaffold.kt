@@ -2,10 +2,14 @@ package com.mak.androidmvi.ui.core
 
 import androidx.collection.mutableLongLongMapOf
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
@@ -83,7 +87,10 @@ fun DashboardScaffold(
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),// Ensures padding for the scaffold's content area.
+                .padding(innerPadding)
+                .consumeWindowInsets(innerPadding)
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+            ,// Ensures padding for the scaffold's content area.
             color = MaterialTheme.colorScheme.background
         ) {
             Box(modifier = Modifier.fillMaxSize()) {

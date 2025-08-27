@@ -6,38 +6,24 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class SplashViewModel : ViewModel() {
 
-
-
     /**
-     * A private MutableStateFlow to store and update the UI state for the notes screen.
+     * A private MutableStateFlow to store and update the UI state for the splash screen.
      */
-    private val _notesViewState = MutableStateFlow(SplashState())
+    private val _uiState = MutableStateFlow(SplashState())
 
     /**
      * A public immutable StateFlow exposing the current UI state.
      * The UI observes this flow to react to state changes.
      */
-    val notesViewState: StateFlow<SplashState> = _notesViewState
+    val uiState: StateFlow<SplashState> = _uiState.asStateFlow()
 
 
-  /*  private val _state = mutableStateOf(SplashState())
-    val state: State<SplashState> = _state
-*/
-/*
-    val state: StateFlow<State> by lazy {
-        _state.onStart {
-            // Load initial data here
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = initialState
-        )
-    }*/
 
     private val _effect = Channel<SplashEffect>()
     val effect = _effect.receiveAsFlow()
@@ -48,18 +34,26 @@ class SplashViewModel : ViewModel() {
 
     private fun startTimer() {
         viewModelScope.launch {
+            onHandleIntent(SplashIntent.ShowLoading(isLoading = true))
             delay(3000) // 3-second splash
             //_state.value = _state.value.copy(isLoading = false)
             _effect.send(SplashEffect.NavigateToAuth)
         }
     }
 
-    fun onIntent(event: SplashIntent) {
-        when (event) {
+    fun onHandleIntent(intent: SplashIntent) {
+        when (intent) {
             SplashIntent.OnTimerFinished -> {
                 viewModelScope.launch {
                     _effect.send(SplashEffect.NavigateToAuth)
                 }
+            }
+
+            SplashIntent.TriggerTimer -> {
+            }
+
+            is SplashIntent.ShowLoading -> {
+                //_uiState
             }
         }
     }
