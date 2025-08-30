@@ -31,6 +31,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.navigation.RootNavigationGraph
+import com.mak.androidmvi.ui.manager.SnackBarManager
 import com.mak.androidmvi.ui.screens.splash.SplashViewModel
 import com.mak.androidmvi.ui.theme.AndroidMviTheme
 import kotlinx.coroutines.launch
@@ -73,6 +74,19 @@ class MainActivity : ComponentActivity() {
 
                 // Provides a coroutine scope for displaying snackbar.
                 val coroutineScope = rememberCoroutineScope()
+
+                LaunchedEffect(Unit) {
+
+                    SnackBarManager.message_sharedFlow.collect { message->
+
+
+
+                    }
+
+                }
+
+
+
 
                 // Observes global app events from EventManager and reacts accordingly.
                 LaunchedEffect(EventManager) {
