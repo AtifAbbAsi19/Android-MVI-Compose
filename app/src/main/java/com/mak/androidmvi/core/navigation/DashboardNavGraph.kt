@@ -1,5 +1,12 @@
 package com.mak.androidmvi.core.navigation
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -11,21 +18,42 @@ import com.mak.androidmvi.ui.ProfileScreen
 import com.mak.androidmvi.ui.SearchScreen
 import com.mak.androidmvi.ui.SettingsScreen
 import com.mak.androidmvi.ui.core.DashboardScaffold
-import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
         navigation<Destination.Dashboard.Root>(startDestination = Destination.Dashboard.Home) {
+
             composable<Destination.Dashboard.Home> {
 
-                val viewMode = it.sharedViewModel<HomeSharedViewModel>( navController = navController)
+                val viewModel = it.sharedViewModel<HomeSharedViewModel>( navController = navController)
 
-                DashboardScaffold(navController) { HomeScreen() }
+                DashboardScaffold(
+                    navController = navController,
+                    topBar = { scrollBehavior ->
+                        LargeTopAppBar(
+                            title = { Text("Home") },
+                            scrollBehavior = scrollBehavior
+                        )
+                    }
+                ) { innerPadding, scrollBehavior ->
+
+                        HomeScreen(
+                            modifier = Modifier
+                                .then(
+                                    if (innerPadding != null) Modifier.padding(innerPadding)
+                                    else Modifier
+                                ),
+                            scrollBehavior = scrollBehavior,
+                            viewModel = viewModel
+                        )
+
+                }
             }
 
             composable<Destination.Dashboard.Profile> {
-                DashboardScaffold(navController) {
+                DashboardScaffold(navController) {innerPadding, scrollBehavior ->
                     ProfileScreen(
                         onUploadPhoto = { navController.navigate(Destination.ProfileSettings.UploadPhoto) },
                         onUpdateEmail = {  navController.navigate(Destination.ProfileSettings.UpdateEmail)  },
@@ -35,15 +63,15 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
             }
 
             composable<Destination.Dashboard.Settings> {
-                DashboardScaffold(navController) { SettingsScreen() }
+                DashboardScaffold(navController) {innerPadding, scrollBehavior -> SettingsScreen() }
             }
 
             composable<Destination.Dashboard.Chat> {
-                DashboardScaffold(navController) { ChatScreen() }
+                DashboardScaffold(navController) { innerPadding, scrollBehavior ->ChatScreen() }
             }
 
             composable<Destination.Dashboard.Search> {
-                DashboardScaffold(navController) { SearchScreen() }
+                DashboardScaffold(navController) { innerPadding, scrollBehavior ->SearchScreen() }
             }
     }
 

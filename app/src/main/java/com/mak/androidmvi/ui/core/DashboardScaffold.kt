@@ -2,6 +2,7 @@ package com.mak.androidmvi.ui.core
 
 import androidx.collection.mutableLongLongMapOf
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,7 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -32,6 +34,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +45,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -53,13 +57,19 @@ import com.mak.androidmvi.core.navigation.Destination
 fun DashboardScaffold(
     navController: NavHostController,
     snackbarHostState: SnackbarHostState? = null,
-    content: @Composable () -> Unit
+    topBar: (@Composable ((TopAppBarScrollBehavior?) -> Unit))? = null, // now nullable
+    content: @Composable (PaddingValues?, TopAppBarScrollBehavior?) -> Unit
 ) {
 
-    // Defines a scroll behavior for the top app bar, enabling it to collapse on scroll.
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
-        rememberTopAppBarState()
-    )
+   // Defines a scroll behavior for the top app bar, enabling it to collapse on scroll.
+    // only create scrollBehavior if topBar is provided
+    val scrollBehavior = topBar?.let {
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+            rememberTopAppBarState()
+        )
+    }
+
+
 
     // Observes the current back stack entry to determine the navigation state.
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
@@ -69,15 +79,24 @@ fun DashboardScaffold(
         derivedStateOf { navController.previousBackStackEntry != null }
     }
 
+    //Modifier.safeDrawingPadding()
+
     // Defines the scaffold structure, which includes the top app bar, snackbar host, and floating action button.
     Scaffold(
+        modifier  = Modifier
+            .safeDrawingPadding()
+        .then(
+            if (scrollBehavior != null) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+            else Modifier
+        ),
         snackbarHost = {
             snackbarHostState?.let {
                 SnackbarHost(hostState = snackbarHostState)
             }
         }, // Host for displaying snackbars.
-        topBar = {},
-        modifier = Modifier.safeDrawingPadding(),
+        topBar = {
+            topBar?.invoke(scrollBehavior) // only call if topBar is provided
+        },
         //Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) // Ensures nested scrolling works with the top bar.
         bottomBar = {
             BottomNavigationBar(navController = navController)
@@ -94,7 +113,7 @@ fun DashboardScaffold(
             color = MaterialTheme.colorScheme.background
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                content()
+                content(innerPadding, scrollBehavior)
             }
         }
     }
