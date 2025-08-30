@@ -19,6 +19,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,39 +33,51 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.asPainter
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPassword: () -> Unit) {
+fun LoginScreen(
+    viewModel: LoginViewModel = viewModel(),
+    onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPassword: () -> Unit) {
 
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    val state by viewModel.state
+    val effect = viewModel.effect.collectAsState(initial = null)
 
+    // Handle effects
+    LaunchedEffect(effect.value) {
+        when (effect.value) {
+            is LoginEffect.NavigateHome -> onLoginSuccess()
+            is LoginEffect.NavigateSignup -> onSignup()
+            is LoginEffect.NavigateForgotPassword -> onForgotPassword()
+            null -> {}
+        }
+    }
 
     // Your UI for Login
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
-
         Column(
-            modifier = Modifier.fillMaxSize().background(Color.White).padding(24.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(space = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
+            // Logo
             Image(
                 painter = R.drawable.login.asPainter(),
                 contentDescription = "splash_logo"
             )
 
+            // Email
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = state.email,
+                onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
                 label = { Text("Email") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -71,34 +85,36 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPasswo
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(Modifier.height(12.dp))
+
+            // Password
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                placeholder = {
-                    if (errorMessage?.isNotBlank() == true) {
-                        Text(
-                            errorMessage ?: "N/A",
-                            color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
-                    } else null
-                },
+                value = state.password,
+                onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
                 label = { Text("Password") },
+                isError = state.error != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
+            if (state.error != null) {
+                Text(
+                    text = state.error ?: "",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
 
             Spacer(Modifier.height(16.dp))
 
             Button(
-                onClick = onLoginSuccess,
-                modifier = Modifier.fillMaxWidth()
+                onClick = { viewModel.onIntent(LoginIntent.SubmitLogin) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !state.isLoading
             ) {
-                Text("Login")
+                Text(if (state.isLoading) "Logging in..." else "Login")
             }
 
             Spacer(Modifier.height(8.dp))
@@ -106,9 +122,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPasswo
             Text(
                 text = "Forgot password?",
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable {
-                    onForgotPassword.invoke()
-                }
+                modifier = Modifier.clickable { viewModel.onIntent(LoginIntent.NavigateToForgotPassword) }
             )
 
             Spacer(Modifier.height(16.dp))
@@ -123,20 +137,9 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPasswo
                     text = "Sign Up",
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.clickable {
-                        onSignup.invoke()
-                    }
+                    modifier = Modifier.clickable { viewModel.onIntent(LoginIntent.NavigateToSignup) }
                 )
             }
         }
     }
-
-    // Implement login logic here
-    errorMessage = if (email == "user@example.com" && password == "password") {
-        null
-        // Navigate to home screen
-    } else {
-        "Invalid credentials"
-    }
-
 }
