@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -47,6 +50,11 @@ fun LoginScreen(
     val state by viewModel.state
     val effect = viewModel.effect.collectAsState(initial = null)
 
+
+    // Make column scrollable
+    val scrollState = rememberScrollState()
+
+
     // Handle effects
     LaunchedEffect(effect.value) {
         when (effect.value) {
@@ -70,7 +78,9 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
-                .padding(24.dp),
+                .verticalScroll(scrollState) // enable scrolling
+                .padding(24.dp)
+                .imePadding(), // adjusts padding when keyboard appears
             verticalArrangement = Arrangement.spacedBy(space = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
