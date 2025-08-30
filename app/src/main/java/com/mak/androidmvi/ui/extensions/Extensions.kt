@@ -1,8 +1,11 @@
 package com.mak.androidmvi.ui.extensions
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -13,6 +16,10 @@ import androidx.navigation.NavHostController
 val NavController.CurrentDestination: NavDestination?
     get() = currentBackStackEntry?.destination
 
+
+fun Modifier.safePadding(paddingValues: PaddingValues?): Modifier {
+    return if (paddingValues != null) this.padding(paddingValues) else this
+}
 
 @SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
