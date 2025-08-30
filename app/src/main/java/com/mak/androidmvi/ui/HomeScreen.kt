@@ -14,10 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import com.mak.androidmvi.core.manager.EventManager
+import com.mak.androidmvi.core.manager.EventManager.AppEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, viewModel: ViewModel) {
+
 
 
     LazyColumn(

@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember { SnackbarHostState() }
 
 
+
             // Global back press handling
             BackHandler {
                 if (navController.previousBackStackEntry != null) {
@@ -83,7 +84,7 @@ class MainActivity : ComponentActivity() {
                                     is EventManager.AppEvent.ShowSnackbar -> {
                                         coroutineScope.launch {
                                             snackbarHostState.showSnackbar(
-                                                "{label}",
+                                                event.message,
                                                 duration = SnackbarDuration.Short
                                             )
                                         }

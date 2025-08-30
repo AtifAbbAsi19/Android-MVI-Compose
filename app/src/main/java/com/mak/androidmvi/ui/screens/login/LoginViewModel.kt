@@ -7,6 +7,9 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
+import com.mak.androidmvi.core.manager.EventManager
+import com.mak.androidmvi.core.manager.EventManager.AppEvent
+import com.mak.androidmvi.ui.manager.SnackBarManager
 import kotlinx.coroutines.delay
 
 class LoginViewModel : ViewModel() {
@@ -50,6 +53,9 @@ class LoginViewModel : ViewModel() {
             if (current.email == "user@example.com" && current.password == "password") {
                 _state.value = current.copy(isLoading = false, isSuccess = true)
                 navigate(LoginEffect.NavigateHome)
+                //Show Snackbar
+                EventManager.triggerEvent(AppEvent.ShowSnackbar("Login SuccessFull"))
+                SnackBarManager.showMessageSharedFlow("Login SuccessFull")
             } else {
                 _state.value = current.copy(isLoading = false, passwordError = "Invalid credentials")
             }

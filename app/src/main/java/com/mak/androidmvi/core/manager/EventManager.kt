@@ -44,7 +44,7 @@ object EventManager {
          * Represents an event to display a Snackbar with a message.
          * @param message The string resource ID for the message to display.
          */
-        data class ShowSnackbar(@StringRes val message: Int) : AppEvent()
+        data class ShowSnackbar( val message: String) : AppEvent()
 
 
     }
