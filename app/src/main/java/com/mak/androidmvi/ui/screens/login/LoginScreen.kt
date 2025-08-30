@@ -24,9 +24,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -55,6 +57,10 @@ fun LoginScreen(
         }
     }
 
+    var emailFocused by rememberSaveable { mutableStateOf(false) }
+    var passwordFocused by rememberSaveable { mutableStateOf(false) }
+
+
     // Your UI for Login
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -79,32 +85,43 @@ fun LoginScreen(
                 value = state.email,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
                 label = { Text("Email") },
+                isError = state.emailError != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focus ->
+                        if (emailFocused && !focus.isFocused) viewModel.validateEmailOnFocusLost()
+                        emailFocused = focus.isFocused
+                    }
             )
+            if (state.emailError != null) {
+                Text(state.emailError?:"", color = MaterialTheme.colorScheme.error)
+            }
+
+            Spacer(Modifier.height(12.dp))
 
             // Password
             OutlinedTextField(
                 value = state.password,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
                 label = { Text("Password") },
-                isError = state.error != null,
+                isError = state.passwordError != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focus ->
+                        if (passwordFocused && !focus.isFocused) viewModel.validatePasswordOnFocusLost()
+                        passwordFocused = focus.isFocused
+                    }
             )
-            if (state.error != null) {
-                Text(
-                    text = state.error ?: "",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
+            if (state.passwordError != null) {
+                Text(state.passwordError?:"", color = MaterialTheme.colorScheme.error)
             }
 
             Spacer(Modifier.height(16.dp))
@@ -112,7 +129,7 @@ fun LoginScreen(
             Button(
                 onClick = { viewModel.onIntent(LoginIntent.SubmitLogin) },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !state.isLoading
+                enabled = state.isLoginEnabled
             ) {
                 Text(if (state.isLoading) "Logging in..." else "Login")
             }
