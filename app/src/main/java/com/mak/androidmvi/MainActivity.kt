@@ -77,9 +77,6 @@ class MainActivity : ComponentActivity() {
                 // Initializes a navigation controller to handle navigation between screens.
                 val navController = rememberNavController()
 
-                // Creates a state to manage snackbar messages.
-                val snackbarHostState = remember { SnackbarHostState() }
-
                 // Provides a coroutine scope for displaying snackbar.
                 val coroutineScope = rememberCoroutineScope()
 

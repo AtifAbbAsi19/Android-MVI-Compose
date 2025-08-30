@@ -29,6 +29,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
                 val viewModel = it.sharedViewModel<HomeSharedViewModel>( navController = navController)
 
+
                 DashboardScaffold(
                     navController = navController,
                     topBar = { scrollBehavior ->
@@ -53,7 +54,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
             }
 
             composable<Destination.Dashboard.Profile> {
-                DashboardScaffold(navController) {innerPadding, scrollBehavior ->
+                DashboardScaffold(navController) {padding, _ ->
                     ProfileScreen(
                         onUploadPhoto = { navController.navigate(Destination.ProfileSettings.UploadPhoto) },
                         onUpdateEmail = {  navController.navigate(Destination.ProfileSettings.UpdateEmail)  },
@@ -63,15 +64,15 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
             }
 
             composable<Destination.Dashboard.Settings> {
-                DashboardScaffold(navController) {innerPadding, scrollBehavior -> SettingsScreen() }
+                DashboardScaffold(navController) {padding, _ -> SettingsScreen() }
             }
 
             composable<Destination.Dashboard.Chat> {
-                DashboardScaffold(navController) { innerPadding, scrollBehavior ->ChatScreen() }
+                DashboardScaffold(navController) { padding, _ -> ChatScreen() }
             }
 
             composable<Destination.Dashboard.Search> {
-                DashboardScaffold(navController) { innerPadding, scrollBehavior ->SearchScreen() }
+                DashboardScaffold(navController) { padding, _ -> SearchScreen() }
             }
     }
 

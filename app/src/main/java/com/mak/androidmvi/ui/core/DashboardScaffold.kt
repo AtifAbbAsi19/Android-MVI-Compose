@@ -56,7 +56,6 @@ import com.mak.androidmvi.core.navigation.Destination
 @Composable
 fun DashboardScaffold(
     navController: NavHostController,
-    snackbarHostState: SnackbarHostState? = null,
     topBar: (@Composable ((TopAppBarScrollBehavior?) -> Unit))? = null, // now nullable
     content: @Composable (PaddingValues?, TopAppBarScrollBehavior?) -> Unit
 ) {
@@ -69,6 +68,8 @@ fun DashboardScaffold(
         )
     }
 
+    // Creates a state to manage snackbar messages.
+    val snackbarHostState = remember { SnackbarHostState() }
 
 
     // Observes the current back stack entry to determine the navigation state.
