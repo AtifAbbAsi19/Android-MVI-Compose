@@ -7,6 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.createGraph
+import com.mak.androidmvi.core.sharedViewModel
+import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 
 
 /**
@@ -19,6 +22,20 @@ import androidx.navigation.compose.NavHost
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {
 
+/*
+    val graph =
+        navController.createGraph(startDestination = Screen.Home.rout) {
+            composable(route = StartingRoute) {
+
+            }
+
+        }
+    NavHost(
+        navController = navController,
+        graph = graph,
+        modifier = Modifier.padding(innerPadding)
+    )*/
+
     NavHost(
         modifier = Modifier.safeDrawingPadding(),
         navController = navController,
@@ -28,6 +45,9 @@ fun RootNavigationGraph(navController: NavHostController) {
         popEnterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) },
         popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) }
     ) {
+
+       // val appSharedViewModel = it.sharedViewModel<AppSharedViewModel>( navController = navController)
+
 
         splashNavGraph(navController)
 

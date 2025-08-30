@@ -11,6 +11,7 @@ import com.mak.androidmvi.ui.ProfileScreen
 import com.mak.androidmvi.ui.SearchScreen
 import com.mak.androidmvi.ui.SettingsScreen
 import com.mak.androidmvi.ui.core.DashboardScaffold
+import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 
 fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
