@@ -1,5 +1,6 @@
 package com.mak.androidmvi.core.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -7,6 +8,7 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -40,11 +42,12 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                     }
                 ) { innerPadding, scrollBehavior ->
 
-                        HomeScreen(
+                    val safePadding = innerPadding ?: PaddingValues(0.dp)
+
+                    HomeScreen(
                             modifier = Modifier
                                 .then(
-                                    if (innerPadding != null) Modifier.padding(innerPadding)
-                                    else Modifier
+                                    Modifier.padding(safePadding)
                                 ),
                             scrollBehavior = scrollBehavior,
                             viewModel = viewModel
