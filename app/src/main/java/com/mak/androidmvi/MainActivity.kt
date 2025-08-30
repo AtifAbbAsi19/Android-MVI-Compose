@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         val splashViewModel = SplashViewModel()
         // Keep the splash screen on display until isLoading is false
-        splashScreen.setKeepOnScreenCondition { splashViewModel.uiState.value.isLoading }
+      //  splashScreen.setKeepOnScreenCondition { splashViewModel.uiState.value.isLoading }
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
