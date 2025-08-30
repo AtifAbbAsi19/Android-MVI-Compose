@@ -7,7 +7,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import kotlinx.coroutines.delay
 
 class LoginViewModel : ViewModel() {
 
@@ -46,7 +46,7 @@ class LoginViewModel : ViewModel() {
         _state.value = current.copy(isLoading = true)
         viewModelScope.launch {
             // simulate network
-            kotlinx.coroutines.delay(1000)
+            delay(1000)
             if (current.email == "user@example.com" && current.password == "password") {
                 _state.value = current.copy(isLoading = false, isSuccess = true)
                 navigate(LoginEffect.NavigateHome)
