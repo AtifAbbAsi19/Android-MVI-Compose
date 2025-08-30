@@ -85,6 +85,7 @@ fun LoginScreen(
                 value = state.email,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
                 label = { Text("Email") },
+                placeholder = { Text("user@example.com") },
                 isError = state.emailError != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -108,6 +109,7 @@ fun LoginScreen(
                 value = state.password,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
                 label = { Text("Password") },
+                placeholder = { Text("password") },
                 isError = state.passwordError != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
