@@ -32,7 +32,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
         composable<Destination.Auth.ForgotPassword> { entry ->
             val args = entry.toRoute<Destination.Auth.ForgotPassword>()
             ForgotPasswordScreen(
-                emailPrefill = args.email,
+                email = args.email,
                 onBack = { navController.popBackStack() }
             )
         }
