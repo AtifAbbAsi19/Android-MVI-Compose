@@ -96,6 +96,9 @@ fun DashboardScaffold(
             }
         }, // Host for displaying snackbars.
         topBar = {
+            //MainTopAppBar(
+            // )
+
             topBar?.invoke(scrollBehavior) // only call if topBar is provided
         },
         //Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) // Ensures nested scrolling works with the top bar.
