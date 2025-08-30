@@ -1,6 +1,7 @@
 package com.mak.androidmvi.ui
 
 import android.util.Patterns
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,21 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ForgotPasswordScreen(onBack: () -> Unit, email: String?) {
 
+
+    // Handle system back press
+    BackHandler {
+
+        onBack.invoke()
+
+
+      /*  // Custom action
+        if (navController.previousBackStackEntry != null) {
+            navController.popBackStack() // navigate back
+        } else {
+            // No previous screen, maybe exit app
+            // Or show confirmation dialog
+        }*/
+    }
 
     var email by remember { mutableStateOf(if(email.isNullOrBlank()){""}else email) }
     var emailError by remember { mutableStateOf(false) }
