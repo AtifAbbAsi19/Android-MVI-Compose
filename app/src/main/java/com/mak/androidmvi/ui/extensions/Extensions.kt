@@ -6,6 +6,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.LayoutModifier
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,6 +21,29 @@ import androidx.navigation.NavHostController
 
 val NavController.CurrentDestination: NavDestination?
     get() = currentBackStackEntry?.destination
+
+//to check if padding is applied already or not
+fun Modifier.markedPadding(padding: PaddingValues): Modifier =
+    this.then(MarkedPaddingModifier(padding))
+
+private class MarkedPaddingModifier(
+    private val padding: PaddingValues
+) : LayoutModifier {
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: Constraints
+    ): MeasureResult {
+        val placeable = measurable.measure(constraints)
+        return layout(
+            placeable.width + padding.calculateLeftPadding(LayoutDirection.Ltr).roundToPx()
+                    + padding.calculateRightPadding(LayoutDirection.Ltr).roundToPx(),
+            placeable.height
+        ) {
+            placeable.placeRelative(0, 0)
+        }
+    }
+}
+
 
 
 fun Modifier.safePadding(paddingValues: PaddingValues?): Modifier {
