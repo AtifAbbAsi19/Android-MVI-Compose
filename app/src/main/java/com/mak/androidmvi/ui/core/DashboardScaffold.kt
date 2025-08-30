@@ -60,6 +60,7 @@ fun DashboardScaffold(
     content: @Composable (PaddingValues?, TopAppBarScrollBehavior?) -> Unit
 ) {
 
+
    // Defines a scroll behavior for the top app bar, enabling it to collapse on scroll.
     // only create scrollBehavior if topBar is provided
     val scrollBehavior = topBar?.let {

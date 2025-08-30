@@ -7,6 +7,8 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -47,11 +49,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-
-
         setContent {
 
             val navController = rememberNavController()
+            // Creates a state to manage snackbar messages.
+            val snackbarHostState = remember { SnackbarHostState() }
 
 
             // Global back press handling
@@ -66,11 +68,7 @@ class MainActivity : ComponentActivity() {
 
             AndroidMviTheme {
 
-
                 val context = LocalContext.current
-
-                // Initializes a navigation controller to handle navigation between screens.
-                val navController = rememberNavController()
 
                 // Provides a coroutine scope for displaying snackbar.
                 val coroutineScope = rememberCoroutineScope()
@@ -84,13 +82,12 @@ class MainActivity : ComponentActivity() {
                                 when (event) {
                                     is EventManager.AppEvent.ShowSnackbar -> {
                                         coroutineScope.launch {
-                                          /*  snackbarHostState.showSnackbar(
-                                                context.stringResource(event.message),
+                                            snackbarHostState.showSnackbar(
+                                                "{label}",
                                                 duration = SnackbarDuration.Short
-                                            )*/
+                                            )
                                         }
                                     }
-
                                     else -> { /* No-op for unsupported events */ }
                                 }
                             }
@@ -98,7 +95,8 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-
+                // Initializes a navigation controller to handle navigation between screens.
+                val navController = rememberNavController()
                 RootNavigationGraph(navController)
             }
         }

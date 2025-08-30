@@ -25,6 +25,12 @@ import androidx.navigation.NavHostController
 val NavController.CurrentDestination: NavDestination?
     get() = currentBackStackEntry?.destination
 
+/*
+val AppNavController: NavHostController?
+    @Composable
+    get() = LocalNavHostController.current
+*/
+
 
 fun Modifier.onlyOncePadding(
     start: Dp = 0.dp,
@@ -43,7 +49,10 @@ private class MarkedPaddingModifierOnlyOnce(
     val end: Dp,
     val bottom: Dp
 ) : LayoutModifier {
-    override fun MeasureScope.measure(measurable: Measurable, constraints: androidx.compose.ui.unit.Constraints): MeasureResult {
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: androidx.compose.ui.unit.Constraints
+    ): MeasureResult {
         val horizontal = (start + end).roundToPx()
         val vertical = (top + bottom).roundToPx()
         val placeable = measurable.measure(constraints.offset(-horizontal, -vertical))
@@ -76,7 +85,6 @@ private class MarkedPaddingModifier(
 }
 
 
-
 fun Modifier.safePadding(paddingValues: PaddingValues?): Modifier {
     return if (paddingValues != null) this.padding(paddingValues) else this
 }
@@ -95,7 +103,6 @@ inline fun <reified VM : ViewModel> NavController.sharedViewModel(
     }
     return viewModel(navBackStackEntry)
 }
-
 
 
 /*
