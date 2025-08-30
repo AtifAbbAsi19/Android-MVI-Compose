@@ -11,7 +11,10 @@ import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,6 +24,34 @@ import androidx.navigation.NavHostController
 
 val NavController.CurrentDestination: NavDestination?
     get() = currentBackStackEntry?.destination
+
+
+fun Modifier.onlyOncePadding(
+    start: Dp = 0.dp,
+    top: Dp = 0.dp,
+    end: Dp = 0.dp,
+    bottom: Dp = 0.dp
+): Modifier {
+    // Check if already contains MarkedPaddingModifier
+    return if (this.any { it is MarkedPaddingModifierOnlyOnce }) this
+    else this.then(MarkedPaddingModifierOnlyOnce(start, top, end, bottom))
+}
+
+private class MarkedPaddingModifierOnlyOnce(
+    val start: Dp,
+    val top: Dp,
+    val end: Dp,
+    val bottom: Dp
+) : LayoutModifier {
+    override fun MeasureScope.measure(measurable: Measurable, constraints: androidx.compose.ui.unit.Constraints): MeasureResult {
+        val horizontal = (start + end).roundToPx()
+        val vertical = (top + bottom).roundToPx()
+        val placeable = measurable.measure(constraints.offset(-horizontal, -vertical))
+        return layout(placeable.width + horizontal, placeable.height + vertical) {
+            placeable.placeRelative(start.roundToPx(), top.roundToPx())
+        }
+    }
+}
 
 //to check if padding is applied already or not
 fun Modifier.markedPadding(padding: PaddingValues): Modifier =
