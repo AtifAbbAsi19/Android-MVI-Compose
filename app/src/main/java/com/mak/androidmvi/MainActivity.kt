@@ -3,6 +3,7 @@ package com.mak.androidmvi
 import android.os.Bundle
 import android.window.SplashScreen
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
@@ -51,6 +52,17 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val navController = rememberNavController()
+
+
+            // Global back press handling
+            BackHandler {
+                if (navController.previousBackStackEntry != null) {
+                    navController.popBackStack()
+                } else {
+                    finish() // exit app
+                }
+            }
+
 
             AndroidMviTheme {
 
