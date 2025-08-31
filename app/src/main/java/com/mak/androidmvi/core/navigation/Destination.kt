@@ -32,6 +32,8 @@ sealed interface Destination {
 
     @Serializable data object Splash : Destination
 
+    @Serializable data object Success : Destination
+
     // -------- Auth Graph --------
     sealed interface Auth : Destination {
         @Serializable data object Root : Auth

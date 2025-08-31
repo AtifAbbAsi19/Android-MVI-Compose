@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,17 +35,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-
-
+import com.mak.androidmvi.R
 
 
 @Composable
-fun ProfileScreen(onUploadPhoto: (() -> Unit) = {}, onUpdateEmail: (() -> Unit) = {}, onUpdatePhone: (() -> Unit) = {}) {
+fun ProfileScreen(onUploadPhoto: (() -> Unit) = {}, onUpdateEmail: (() -> Unit) = {}, onUpdatePhone: (() -> Unit) = {},successScreen: (() -> Unit) = {}) {
 
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    var phone by rememberSaveable { mutableStateOf("") }
+    var showPassword by rememberSaveable { mutableStateOf(false) }
 
 
     Column {
@@ -71,7 +71,7 @@ fun ProfileScreen(onUploadPhoto: (() -> Unit) = {}, onUpdateEmail: (() -> Unit) 
                     .size(120.dp)
             ) {
                 Image(
-                    painter = painterResource(id = android.R.drawable.sym_def_app_icon), // Replace with profile image
+                    painter = painterResource(R.drawable.sharp_delivery_truck_speed_24), // Replace with profile image
                     contentDescription = "Profile Picture",
                     modifier = Modifier
                         .size(120.dp)
@@ -142,7 +142,7 @@ fun ProfileScreen(onUploadPhoto: (() -> Unit) = {}, onUpdateEmail: (() -> Unit) 
 
             // Save Button
             Button(
-                onClick = { /* Save profile */ },
+                onClick = { successScreen.invoke() },
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium
             ) {

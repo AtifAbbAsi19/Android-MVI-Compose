@@ -21,6 +21,7 @@ import com.mak.androidmvi.ui.SearchScreen
 import com.mak.androidmvi.ui.SettingsScreen
 import com.mak.androidmvi.ui.core.BottomNavigationBar
 import com.mak.androidmvi.ui.core.DashboardScaffold
+import com.mak.androidmvi.ui.screens.success.SuccessScreen
 import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,9 +63,20 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                     ProfileScreen(
                         onUploadPhoto = { navController.navigate(Destination.ProfileSettings.UploadPhoto) },
                         onUpdateEmail = {  navController.navigate(Destination.ProfileSettings.UpdateEmail)  },
-                        onUpdatePhone = {  navController.navigate(Destination.ProfileSettings.UpdatePhoneNumber) }
+                        onUpdatePhone = {  navController.navigate(Destination.ProfileSettings.UpdatePhoneNumber) },
+                        successScreen = {
+                            navController.navigate(
+                                Destination.Success
+                            )
+                        }
                     )
                 }
+            }
+
+
+            composable<Destination.Success> {
+                DashboardScaffold(navController) {padding, _ -> SuccessScreen(
+                ) }
             }
 
             composable<Destination.Dashboard.Settings> {
