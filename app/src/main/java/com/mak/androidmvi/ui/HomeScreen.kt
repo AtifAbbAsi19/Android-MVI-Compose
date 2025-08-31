@@ -47,7 +47,9 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
                 text = "Item #$index",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp).clickable{
+
+                    }
             )
         }
     }
