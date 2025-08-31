@@ -6,6 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
@@ -27,7 +32,10 @@ import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
+
+
         navigation<Destination.Dashboard.Root>(startDestination = Destination.Dashboard.Home) {
+
 
             composable<Destination.Dashboard.Home> {
 
@@ -59,12 +67,17 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
             }
 
             composable<Destination.Dashboard.Profile> {
-                DashboardScaffold(navController = navController, showBottomBar = false) {padding, _ ->
+
+                var showBottomNavigation by rememberSaveable { mutableStateOf(true) }
+
+                DashboardScaffold(navController = navController, showBottomBar = showBottomNavigation) {padding, _ ->
                     ProfileScreen(
                         onUploadPhoto = { navController.navigate(Destination.ProfileSettings.UploadPhoto) },
                         onUpdateEmail = {  navController.navigate(Destination.ProfileSettings.UpdateEmail)  },
                         onUpdatePhone = {  navController.navigate(Destination.ProfileSettings.UpdatePhoneNumber) },
                         successScreen = {
+                            showBottomNavigation = false
+
                             navController.navigate(
                                 Destination.Success
                             )
