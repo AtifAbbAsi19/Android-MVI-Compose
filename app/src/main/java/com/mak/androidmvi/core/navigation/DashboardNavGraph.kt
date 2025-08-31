@@ -59,7 +59,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
             }
 
             composable<Destination.Dashboard.Profile> {
-                DashboardScaffold(navController) {padding, _ ->
+                DashboardScaffold(navController = navController, showBottomBar = false) {padding, _ ->
                     ProfileScreen(
                         onUploadPhoto = { navController.navigate(Destination.ProfileSettings.UploadPhoto) },
                         onUpdateEmail = {  navController.navigate(Destination.ProfileSettings.UpdateEmail)  },
