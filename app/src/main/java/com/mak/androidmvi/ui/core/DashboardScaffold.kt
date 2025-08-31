@@ -58,7 +58,7 @@ fun DashboardScaffold(
     navController: NavHostController,
     topBar: (@Composable ((TopAppBarScrollBehavior?) -> Unit))? = null, // now nullable
     bottomBar: @Composable ((() -> Unit))? = null,
-    showBottomBar: Boolean = true,
+    showBottomBar: Boolean = false,
     content: @Composable (PaddingValues?, TopAppBarScrollBehavior?) -> Unit,
 ) {
 

@@ -50,6 +50,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                             scrollBehavior = scrollBehavior
                         )
                     },
+                    showBottomBar = true
                 ) { innerPadding, scrollBehavior ->
 
                     val safePadding = innerPadding ?: PaddingValues(0.dp)
@@ -68,16 +69,12 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
             composable<Destination.Dashboard.Profile> {
 
-                var showBottomNavigation by rememberSaveable { mutableStateOf(true) }
-
-                DashboardScaffold(navController = navController, showBottomBar = showBottomNavigation) {padding, _ ->
+                DashboardScaffold(navController = navController, showBottomBar = true) {padding, _ ->
                     ProfileScreen(
                         onUploadPhoto = { navController.navigate(Destination.ProfileSettings.UploadPhoto) },
                         onUpdateEmail = {  navController.navigate(Destination.ProfileSettings.UpdateEmail)  },
                         onUpdatePhone = {  navController.navigate(Destination.ProfileSettings.UpdatePhoneNumber) },
                         successScreen = {
-                            showBottomNavigation = false
-
                             navController.navigate(
                                 Destination.Success
                             )
@@ -88,20 +85,20 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
 
             composable<Destination.Success> {
-                DashboardScaffold(navController) {padding, _ -> SuccessScreen(
+                DashboardScaffold(navController, showBottomBar = false) {padding, _ -> SuccessScreen(
                 ) }
             }
 
             composable<Destination.Dashboard.Settings> {
-                DashboardScaffold(navController) {padding, _ -> SettingsScreen() }
+                DashboardScaffold(navController,  showBottomBar = true) {padding, _ -> SettingsScreen() }
             }
 
             composable<Destination.Dashboard.Chat> {
-                DashboardScaffold(navController) { padding, _ -> ChatScreen() }
+                DashboardScaffold(navController, showBottomBar = true) { padding, _ -> ChatScreen() }
             }
 
             composable<Destination.Dashboard.Search> {
-                DashboardScaffold(navController) { padding, _ -> SearchScreen() }
+                DashboardScaffold(navController, showBottomBar = true) { padding, _ -> SearchScreen() }
             }
     }
 
