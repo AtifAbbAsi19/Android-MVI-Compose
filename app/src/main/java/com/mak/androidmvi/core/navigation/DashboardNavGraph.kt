@@ -19,6 +19,7 @@ import com.mak.androidmvi.ui.HomeScreen
 import com.mak.androidmvi.ui.ProfileScreen
 import com.mak.androidmvi.ui.SearchScreen
 import com.mak.androidmvi.ui.SettingsScreen
+import com.mak.androidmvi.ui.core.BottomNavigationBar
 import com.mak.androidmvi.ui.core.DashboardScaffold
 import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 
@@ -39,7 +40,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                             title = { Text("Home") },
                             scrollBehavior = scrollBehavior
                         )
-                    }
+                    },
                 ) { innerPadding, scrollBehavior ->
 
                     val safePadding = innerPadding ?: PaddingValues(0.dp)

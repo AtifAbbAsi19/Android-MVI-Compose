@@ -57,11 +57,12 @@ import com.mak.androidmvi.core.navigation.Destination
 fun DashboardScaffold(
     navController: NavHostController,
     topBar: (@Composable ((TopAppBarScrollBehavior?) -> Unit))? = null, // now nullable
-    content: @Composable (PaddingValues?, TopAppBarScrollBehavior?) -> Unit
+    bottomBar: @Composable ((() -> Unit))? = null,
+    showBottomBar: Boolean = true,
+    content: @Composable (PaddingValues?, TopAppBarScrollBehavior?) -> Unit,
 ) {
 
-
-   // Defines a scroll behavior for the top app bar, enabling it to collapse on scroll.
+    // Defines a scroll behavior for the top app bar, enabling it to collapse on scroll.
     // only create scrollBehavior if topBar is provided
     val scrollBehavior = topBar?.let {
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
@@ -85,12 +86,12 @@ fun DashboardScaffold(
 
     // Defines the scaffold structure, which includes the top app bar, snackbar host, and floating action button.
     Scaffold(
-        modifier  = Modifier
+        modifier = Modifier
             .safeDrawingPadding()
-        .then(
-            if (scrollBehavior != null) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
-            else Modifier
-        ),
+            .then(
+                if (scrollBehavior != null) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+                else Modifier
+            ),
         snackbarHost = {
             snackbarHostState?.let {
                 SnackbarHost(hostState = snackbarHostState)
@@ -104,7 +105,12 @@ fun DashboardScaffold(
         },
         //Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) // Ensures nested scrolling works with the top bar.
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            bottomBar?.let {
+                bottomBar.invoke()
+            } ?: run {
+                if (showBottomBar)
+                    BottomNavigationBar(navController = navController)
+            }
         }
     ) { innerPadding ->
 
@@ -113,8 +119,7 @@ fun DashboardScaffold(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-            ,// Ensures padding for the scaffold's content area.
+                .windowInsetsPadding(WindowInsets.safeDrawing),// Ensures padding for the scaffold's content area.
             color = MaterialTheme.colorScheme.background
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -123,128 +128,3 @@ fun DashboardScaffold(
         }
     }
 }
-
-@Composable
-fun BottomNavigationBar(navController: NavHostController) {
-
-    val items = getBottomNavigationList().filter { it.enabled }
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination
-
-    NavigationBar(
-        //Don't forget to apply the modifier inside your BottomBar composable
-        modifier = Modifier
-            .navigationBarsPadding()
-            .safeDrawingPadding()
-    ) {
-        items.forEachIndexed { index, item ->
-
-            // ✅ Active tab depends only on NavController
-            val selected = currentRoute == item.route || item.isSelected
-            item.isSelected = selected
-            NavigationBarItem(
-                selected = selected,
-                onClick = {
-
-                    item.isSelected = true
-                    if (currentRoute != item.route) {
-                        navController.navigate(item.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                },
-                label = { Text(text = item.title) },
-                alwaysShowLabel = false,
-                icon = {
-                    BadgedBox(
-                        badge = {
-                            when {
-                                item.badgeCount != null -> Badge {
-                                    Text(text = item.badgeCount.toString())
-                                }
-
-                                item.hasNews -> Badge()
-                            }
-                        }
-                    ) {
-                        Icon(
-                            imageVector = if (selected) item.selectedIcon else item.unselectedIcon,
-                            contentDescription = item.title
-                        )
-                    }
-                }
-            )
-        }
-    }
-
-    /*   // ✅ Ensure the NavHost starts on the given selectedIndex (if provided)
-       LaunchedEffect(Unit) {
-           selectedIndex?.let {
-               navController.navigate(items[it].route) {
-                   popUpTo(navController.graph.startDestinationId) { inclusive = true }
-                   launchSingleTop = true
-               }
-           }
-       }*/
-}
-
-@Composable
-fun getBottomNavigationList() = listOf(
-    BottomNavigationItem(
-        title = "Home",
-        route = Destination.Dashboard.Home,
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
-        hasNews = false,
-        isSelected = true
-    ),
-    BottomNavigationItem(
-        title = "Services",
-        route = Destination.Dashboard.Search,
-        selectedIcon = Icons.Filled.Search,
-        unselectedIcon = Icons.Outlined.Search,
-        hasNews = false,
-    ),
-    BottomNavigationItem(
-        title = "Profile",
-        route = Destination.Dashboard.Chat,
-        selectedIcon = Icons.Filled.Email,
-        unselectedIcon = Icons.Outlined.Email,
-        hasNews = false,
-        badgeCount = 45
-    ),
-    BottomNavigationItem(
-        title = "Settings",
-        route = Destination.Dashboard.Settings,
-        selectedIcon = Icons.Filled.Settings,
-        unselectedIcon = Icons.Outlined.Settings,
-        hasNews = true,
-    ),
-
-
-    )
-
-
-/*
-NavigationBarItem(
-selected = false,
-onClick = { navController.navigate(Destination.Dashboard.Home) },
-icon = { Icon(Icons.Default.Home, null) },
-label = { Text("Home") }
-)
-NavigationBarItem(
-selected = false,
-onClick = { navController.navigate(Destination.Dashboard.Profile) },
-icon = { Icon(Icons.Default.Person, null) },
-label = { Text("Profile") }
-)
-NavigationBarItem(
-selected = false,
-onClick = { navController.navigate(Destination.Dashboard.Settings) },
-icon = { Icon(Icons.Default.Settings, null) },
-label = { Text("Settings") }
-)*/

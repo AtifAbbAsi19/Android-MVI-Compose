@@ -1,6 +1,29 @@
 package com.mak.androidmvi.core.navigation
 
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
 import kotlinx.serialization.Serializable
+
+
+/*// Create a Saver for ScreenState
+val ScreenStateSaver: Saver<Destination, List<String>> = listSaver(
+    save = { state ->
+        when (state) {
+            is Destination.Root -> listOf(Destination.Root::class.simpleName)
+            is Destination.Splash -> listOf("splash")
+            is Destination.Dashboard -> listOf("Dashboard")
+        }
+    },
+    restore = { list ->
+        when (list[0]) {
+            "Loading" -> Destination.Root
+            "Login" -> Destination.Splash
+            "Dashboard" -> Destination.Dashboard
+            else -> Destination.Dashboard
+        }
+    }
+)*/
+
 
 sealed interface Destination {
 
