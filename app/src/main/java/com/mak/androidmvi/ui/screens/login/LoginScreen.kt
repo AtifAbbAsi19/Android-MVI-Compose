@@ -36,8 +36,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.asPainter
@@ -50,7 +50,7 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPassword: () -> Unit) {
 
     val state by viewModel.state
-    val effect = viewModel.effect.collectAsState(initial = null)
+    val effect = viewModel.effect.collectAsStateWithLifecycle( initialValue = Unit)
 
 
     // Make column scrollable
@@ -86,9 +86,13 @@ fun LoginScreen(
             verticalArrangement = Arrangement.spacedBy(space = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+
+            val logo = remember { R.drawable.login }
+
             // Logo
             Image(
-                painter = R.drawable.login.asPainter(),
+                painter = logo.asPainter(),
                 contentDescription = "splash_logo"
             )
 
