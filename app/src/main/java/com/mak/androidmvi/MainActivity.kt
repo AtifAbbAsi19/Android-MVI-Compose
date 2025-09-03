@@ -12,6 +12,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,9 +29,13 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.navigation.RootNavigationGraph
+import com.mak.androidmvi.ui.extensions.AppConfig
+import com.mak.androidmvi.ui.extensions.LocalAppConfig
+import com.mak.androidmvi.ui.extensions.LocalNavController
 import com.mak.androidmvi.ui.manager.SnackBarManager
 import com.mak.androidmvi.ui.screens.splash.SplashViewModel
 import com.mak.androidmvi.ui.theme.AndroidMviTheme
@@ -70,49 +75,56 @@ class MainActivity : ComponentActivity() {
 
             AndroidMviTheme {
 
-                val context = LocalContext.current
-
-                // Provides a coroutine scope for displaying snackbar.
-                val coroutineScope = rememberCoroutineScope()
-
-                LaunchedEffect(Unit) {
-
-                    SnackBarManager.message_sharedFlow.collect { message->
+                // Provide the app configuration for the entire composable hierarchy
+                CompositionLocalProvider(
+                    LocalAppConfig provides AppConfig(isDebugMode = true),
+                    LocalNavController provides navController
+                ) {
 
 
+                    val context = LocalContext.current
+
+                    // Provides a coroutine scope for displaying snackbar.
+                    val coroutineScope = rememberCoroutineScope()
+
+                    LaunchedEffect(Unit) {
+
+                        SnackBarManager.message_sharedFlow.collect { message ->
+
+
+                        }
 
                     }
 
-                }
 
+                    // Observes global app events from EventManager and reacts accordingly.
+                    LaunchedEffect(EventManager) {
+                        lifecycleScope.launch {
+                            // Ensures that event collection only happens while the lifecycle is in the STARTED state.
+                            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                EventManager.eventsFlow.collect { event ->
+                                    when (event) {
+                                        is EventManager.AppEvent.ShowSnackbar -> {
+                                            coroutineScope.launch {
+                                                snackbarHostState.showSnackbar(
+                                                    event.message,
+                                                    duration = SnackbarDuration.Short
+                                                )
+                                            }
+                                        }
 
-
-
-                // Observes global app events from EventManager and reacts accordingly.
-                LaunchedEffect(EventManager) {
-                    lifecycleScope.launch {
-                        // Ensures that event collection only happens while the lifecycle is in the STARTED state.
-                        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            EventManager.eventsFlow.collect { event ->
-                                when (event) {
-                                    is EventManager.AppEvent.ShowSnackbar -> {
-                                        coroutineScope.launch {
-                                            snackbarHostState.showSnackbar(
-                                                event.message,
-                                                duration = SnackbarDuration.Short
-                                            )
+                                        else -> { /* No-op for unsupported events */
                                         }
                                     }
-                                    else -> { /* No-op for unsupported events */ }
                                 }
                             }
                         }
                     }
-                }
 
-                // Initializes a navigation controller to handle navigation between screens.
-                val navController = rememberNavController()
-                RootNavigationGraph(navController)
+                    // Initializes a navigation controller to handle navigation between screens.
+                    val navController = rememberNavController()
+                    RootNavigationGraph(navController)
+                }
             }
         }
     }
