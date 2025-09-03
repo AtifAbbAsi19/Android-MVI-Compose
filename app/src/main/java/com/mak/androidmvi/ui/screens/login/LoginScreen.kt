@@ -115,6 +115,27 @@ fun LoginScreen(
             Spacer(Modifier.height(12.dp))
 
             // Password
+
+            InputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focus ->
+                        if (passwordFocused && !focus.isFocused) viewModel.validatePasswordOnFocusLost()
+                        passwordFocused = focus.isFocused
+                    },
+                builder = InputFieldBuilder(
+                    label = "Password",
+                    hint = "Enter Password",
+                    value = state.password,
+                    onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
+                    isError = state.passwordError != null,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    )
+                )
+            )
+
             OutlinedTextField(
                 value = state.password,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
