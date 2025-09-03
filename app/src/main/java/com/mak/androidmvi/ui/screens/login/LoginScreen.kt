@@ -101,6 +101,7 @@ fun LoginScreen(
                     },
                 builder = InputFieldBuilder(
                     label = "Email",
+                    hint = "Enter Email",
                     value = state.email,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
                     isError = state.emailError != null,
