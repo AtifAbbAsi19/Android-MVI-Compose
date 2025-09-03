@@ -9,10 +9,12 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.manager.EventManager.AppEvent
+import com.mak.androidmvi.ui.extensions.isValidEmail
 import com.mak.androidmvi.ui.manager.SnackBarManager
 import kotlinx.coroutines.delay
 //import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +30,14 @@ class LoginViewModel : ViewModel() {
     private val _stateMutableStateFlow = MutableStateFlow(LoginUiState())
     val stateFlow: StateFlow<LoginUiState> get()  = _stateMutableStateFlow.asStateFlow()
 
+
+/*    val isEmailValid: StateFlow<Boolean> = _state.value.email
+        .map { _state.value.email.isValidEmail() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false
+        )*/
 
     private val _effect = Channel<LoginEffect>()
     val effect = _effect.receiveAsFlow()
