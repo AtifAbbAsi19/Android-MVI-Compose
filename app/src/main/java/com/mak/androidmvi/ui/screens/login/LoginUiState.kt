@@ -9,6 +9,11 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false
 ){
+    val emailLabel = "Email"
+    val emailHint = "Enter Email"
+    val passwordLabel = "Password"
+    val reConfirmPasswordLabel = "Password"
+
     val isLoginEnabled: Boolean
         get() = email.isNotBlank() && password.isNotBlank() && !isLoading
 }

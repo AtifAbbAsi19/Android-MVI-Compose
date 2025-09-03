@@ -100,8 +100,8 @@ fun LoginScreen(
                         emailFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    label = "Email",
-                    hint = "Enter Email",
+                    label = state.emailLabel,
+                    hint = state.emailHint,
                     value = state.email,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
                     isError = state.emailError != null,
@@ -124,14 +124,14 @@ fun LoginScreen(
                         passwordFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    label = "Password",
+                    label = state.passwordLabel,
                     hint = "Enter Password",
                     value = state.password,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
                     isError = state.passwordError != null,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done
+                        imeAction = ImeAction.Next
                     )
                 )
             )
@@ -139,7 +139,7 @@ fun LoginScreen(
             OutlinedTextField(
                 value = state.password,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
-                label = { Text("Password") },
+                label = { Text(state.reConfirmPasswordLabel) },
                 placeholder = { Text("password") },
                 isError = state.passwordError != null,
                 keyboardOptions = KeyboardOptions(
