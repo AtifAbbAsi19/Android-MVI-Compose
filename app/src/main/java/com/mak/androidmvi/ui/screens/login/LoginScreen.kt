@@ -126,7 +126,7 @@ fun LoginScreen(
                     },
                 builder = InputFieldBuilder(
                     label = mutableStateFlow.passwordLabel,
-                    hint = "Enter Password",
+                    hint = mutableStateFlow.passwordHint,
                     value = mutableStateFlow.password,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
                     isError = mutableStateFlow.passwordError != null,

@@ -15,6 +15,7 @@ data class LoginUiState(
     val emailLabel = "Email"
     val emailHint = "Enter Email"
     val passwordLabel = "Password"
+    val passwordHint = "Enter Password"
     val reConfirmPasswordLabel = "Password"
 
     val isLoginEnabled: Boolean
