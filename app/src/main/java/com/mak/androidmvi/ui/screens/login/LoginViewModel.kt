@@ -20,9 +20,11 @@ import kotlinx.coroutines.flow.update
 
 class LoginViewModel : ViewModel() {
 
+    //to be used for simple apps
     private val _state = mutableStateOf(LoginUiState())
     val state: State<LoginUiState> get() = _state
 
+    //Mvi Recommened Pattren plus for complex data handling
     private val _stateMutableStateFlow = MutableStateFlow(LoginUiState())
     val stateFlow: StateFlow<LoginUiState> get()  = _stateMutableStateFlow.asStateFlow()
 
