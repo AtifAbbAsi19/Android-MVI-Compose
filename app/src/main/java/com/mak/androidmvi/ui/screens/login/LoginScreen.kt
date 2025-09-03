@@ -49,8 +49,11 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPassword: () -> Unit) {
 
-    //val state by viewModel.state
+   //first approach
     val effect = viewModel.effect.collectAsStateWithLifecycle( initialValue = Unit)
+
+    //second apprach
+    val state by viewModel.state
 
     val mutableStateFlow by viewModel.stateFlow.collectAsStateWithLifecycle()
 
