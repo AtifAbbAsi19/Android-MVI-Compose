@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -94,7 +95,9 @@ fun AppScaffold(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding)
-                .windowInsetsPadding(WindowInsets.safeDrawing),// Ensures padding for the scaffold's content area.
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+                .safeDrawingPadding()
+                .navigationBarsPadding(),// Ensures padding for the scaffold's content area.
             color = MaterialTheme.colorScheme.background
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
