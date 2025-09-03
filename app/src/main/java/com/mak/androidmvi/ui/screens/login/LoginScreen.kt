@@ -88,13 +88,9 @@ fun LoginScreen(
         ) {
 
 
-            val logo = remember { R.drawable.login }
+            Logo()
 
-            // Logo
-            Image(
-                painter = logo.asPainter(),
-                contentDescription = "splash_logo"
-            )
+
 
             InputField(
                 modifier = Modifier
@@ -131,7 +127,7 @@ fun LoginScreen(
                     label = state.passwordLabel,
                     hint = "Enter Password",
                     value = state.password,
-                    onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
+                    onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
                     isError = state.passwordError != null,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
@@ -196,4 +192,15 @@ fun LoginScreen(
             }
         }
     }
+}
+
+@Composable
+fun Logo(){
+    val logo = remember { R.drawable.login }
+
+    // Logo
+    Image(
+        painter = logo.asPainter(),
+        contentDescription = "splash_logo"
+    )
 }
