@@ -32,7 +32,9 @@ data class InputFieldBuilder(
 
 
 @Composable
-fun InputField(builder : InputFieldBuilder){
+fun InputField(
+    modifier : Modifier,
+    builder : InputFieldBuilder){
 
     Column {
 

@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.asPainter
+import com.mak.androidmvi.designsystem.InputField
+import com.mak.androidmvi.designsystem.InputFieldBuilder
 
 @Composable
 fun LoginScreen(
@@ -90,27 +92,24 @@ fun LoginScreen(
                 contentDescription = "splash_logo"
             )
 
-            // Email
-            OutlinedTextField(
-                value = state.email,
-                onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
-                label = { Text("Email") },
-                placeholder = { Text("user@example.com") },
-                isError = state.emailError != null,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
-                ),
+            InputField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusChanged { focus ->
                         if (emailFocused && !focus.isFocused) viewModel.validateEmailOnFocusLost()
                         emailFocused = focus.isFocused
-                    }
+                    },
+                builder = InputFieldBuilder(
+                    label = "Email",
+                    value = state.email,
+                    onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
+                    isError = state.emailError != null,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    )
+                )
             )
-            if (state.emailError != null) {
-                Text(state.emailError?:"", color = MaterialTheme.colorScheme.error)
-            }
 
             Spacer(Modifier.height(12.dp))
 
