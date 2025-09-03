@@ -34,21 +34,26 @@ class LoginViewModel : ViewModel() {
         when (intent) {
             is LoginIntent.EnterEmail -> {
 
+                //first approach
                 _stateMutableStateFlow.update {
                     it.copy(
                         email = intent.email, emailError = "HI value"
                     )
                 }
 
-             //   _state.value = _state.value.copy(email = intent.email, emailError = "HI value")
+                //second approach
+                _state.value = _state.value.copy(email = intent.email, emailError = "HI value")
             }
             is LoginIntent.EnterPassword -> {
+
+                //first approach
                 _stateMutableStateFlow.update {
                     it.copy(
                         password = intent.password, passwordError = null
                     )
                 }
-               // _state.value = _state.value.copy(password = intent.password, passwordError = null)
+                //second approach
+                _state.value = _state.value.copy(password = intent.password, passwordError = null)
             }
             LoginIntent.SubmitLogin -> submitLogin()
             LoginIntent.NavigateToSignup -> navigate(LoginEffect.NavigateSignup)
