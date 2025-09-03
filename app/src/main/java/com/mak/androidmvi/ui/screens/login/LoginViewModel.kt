@@ -11,19 +11,45 @@ import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.manager.EventManager.AppEvent
 import com.mak.androidmvi.ui.manager.SnackBarManager
 import kotlinx.coroutines.delay
+//import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class LoginViewModel : ViewModel() {
 
     private val _state = mutableStateOf(LoginUiState())
     val state: State<LoginUiState> get() = _state
 
+    private val _stateMutableStateFlow = MutableStateFlow(LoginUiState())
+    val stateFlow: StateFlow<LoginUiState> get()  = _stateMutableStateFlow.asStateFlow()
+
+
     private val _effect = Channel<LoginEffect>()
     val effect = _effect.receiveAsFlow()
 
     fun onIntent(intent: LoginIntent) {
         when (intent) {
-            is LoginIntent.EnterEmail -> _state.value = _state.value.copy(email = intent.email, emailError = null)
-            is LoginIntent.EnterPassword -> _state.value = _state.value.copy(password = intent.password, passwordError = null)
+            is LoginIntent.EnterEmail -> {
+
+                _stateMutableStateFlow.update {
+                    it.copy(
+                        email = intent.email, emailError = "HI value"
+                    )
+                }
+
+             //   _state.value = _state.value.copy(email = intent.email, emailError = "HI value")
+            }
+            is LoginIntent.EnterPassword -> {
+                _stateMutableStateFlow.update {
+                    it.copy(
+                        password = intent.password, passwordError = null
+                    )
+                }
+               // _state.value = _state.value.copy(password = intent.password, passwordError = null)
+            }
             LoginIntent.SubmitLogin -> submitLogin()
             LoginIntent.NavigateToSignup -> navigate(LoginEffect.NavigateSignup)
             LoginIntent.NavigateToForgotPassword -> navigate(LoginEffect.NavigateForgotPassword)

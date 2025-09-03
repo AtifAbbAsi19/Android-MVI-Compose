@@ -38,9 +38,7 @@ fun InputField(
 
     Column {
 
-        builder.label?.let {
-            Text(it)
-        }
+         LabelView(builder.label)
 
         // Email
         OutlinedTextField(
@@ -64,4 +62,11 @@ fun InputField(
 
     }
 
+}
+
+@Composable
+fun LabelView(label: String?) {
+    label?.let {
+        Text(it)
+    }
 }

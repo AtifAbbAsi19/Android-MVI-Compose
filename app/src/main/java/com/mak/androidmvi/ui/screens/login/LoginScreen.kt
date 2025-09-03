@@ -49,9 +49,10 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPassword: () -> Unit) {
 
-    val state by viewModel.state
+    //val state by viewModel.state
     val effect = viewModel.effect.collectAsStateWithLifecycle( initialValue = Unit)
 
+    val mutableStateFlow by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     // Make column scrollable
     val scrollState = rememberScrollState()
@@ -100,11 +101,11 @@ fun LoginScreen(
                         emailFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    label = state.emailLabel,
-                    hint = state.emailHint,
-                    value = state.email,
+                    label = mutableStateFlow.emailLabel,
+                    hint = mutableStateFlow.emailHint,
+                    value = mutableStateFlow.email,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
-                    isError = state.emailError != null,
+                    isError = mutableStateFlow.emailError != null,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
@@ -124,11 +125,11 @@ fun LoginScreen(
                         passwordFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    label = state.passwordLabel,
+                    label = mutableStateFlow.passwordLabel,
                     hint = "Enter Password",
-                    value = state.password,
+                    value = mutableStateFlow.password,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
-                    isError = state.passwordError != null,
+                    isError = mutableStateFlow.passwordError != null,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Next
@@ -137,11 +138,11 @@ fun LoginScreen(
             )
 
             OutlinedTextField(
-                value = state.password,
+                value = mutableStateFlow.password,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
-                label = { Text(state.reConfirmPasswordLabel) },
+                label = { Text(mutableStateFlow.reConfirmPasswordLabel) },
                 placeholder = { Text("password") },
-                isError = state.passwordError != null,
+                isError = mutableStateFlow.passwordError != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
@@ -153,8 +154,8 @@ fun LoginScreen(
                         passwordFocused = focus.isFocused
                     }
             )
-            if (state.passwordError != null) {
-                Text(state.passwordError?:"", color = MaterialTheme.colorScheme.error)
+            if (mutableStateFlow.passwordError != null) {
+                Text(mutableStateFlow.passwordError?:"", color = MaterialTheme.colorScheme.error)
             }
 
             Spacer(Modifier.height(16.dp))
@@ -162,9 +163,9 @@ fun LoginScreen(
             Button(
                 onClick = { viewModel.onIntent(LoginIntent.SubmitLogin) },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = state.isLoginEnabled
+                enabled = mutableStateFlow.isLoginEnabled
             ) {
-                Text(if (state.isLoading) "Logging in..." else "Login")
+                Text(if (mutableStateFlow.isLoading) "Logging in..." else "Login")
             }
 
             Spacer(Modifier.height(8.dp))
