@@ -20,7 +20,7 @@ import com.mak.androidmvi.ui.screens.login.LoginIntent
 
 @Stable
 data class InputFieldBuilder(
-    var label : String?= null,
+    var label : LabelBuilder?= null,
     var value : String,
     var hint : String?= null,
     var footerMessage : String?= null,
@@ -28,7 +28,12 @@ data class InputFieldBuilder(
     val onValueChange: (String) -> Unit,
     val keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     val keyboardActions: KeyboardActions = KeyboardActions.Default,
-)
+){
+
+    data class LabelBuilder(
+        var label : String?= null,
+    )
+}
 
 
 @Composable
@@ -65,8 +70,8 @@ fun InputField(
 }
 
 @Composable
-fun LabelView(label: String?) {
+fun LabelView(label: InputFieldBuilder.LabelBuilder?) {
     label?.let {
-        Text(it)
+        Text(it.label?:"")
     }
 }

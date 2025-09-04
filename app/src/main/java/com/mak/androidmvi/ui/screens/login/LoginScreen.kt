@@ -104,7 +104,9 @@ fun LoginScreen(
                         emailFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    label = mutableStateFlow.emailLabel,
+                    label = InputFieldBuilder.LabelBuilder(
+                        label =  mutableStateFlow.emailLabel
+                    ),
                     hint = mutableStateFlow.emailHint,
                     value = mutableStateFlow.email,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
@@ -128,7 +130,9 @@ fun LoginScreen(
                         passwordFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    label = mutableStateFlow.passwordLabel,
+                    label = InputFieldBuilder.LabelBuilder(
+                        label =  mutableStateFlow.passwordLabel
+                    ),
                     hint = mutableStateFlow.passwordHint,
                     value = mutableStateFlow.password,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
