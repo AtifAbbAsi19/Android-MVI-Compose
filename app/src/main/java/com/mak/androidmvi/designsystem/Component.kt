@@ -9,6 +9,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposableTarget
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -20,9 +21,9 @@ import com.mak.androidmvi.ui.screens.login.LoginIntent
 
 @Stable
 data class InputFieldBuilder(
-    var label : LabelBuilder?= null,
+    val label : LabelBuilder?= null,
     var value : String,
-    var hint : String?= null,
+    val hint : String?= null,
     var footerMessage : String?= null,
     var isError : Boolean= false,
     val onValueChange: (String) -> Unit,
@@ -30,8 +31,9 @@ data class InputFieldBuilder(
     val keyboardActions: KeyboardActions = KeyboardActions.Default,
 ){
 
+    @Immutable
     data class LabelBuilder(
-        var label : String?= null,
+        val label : String?= null,
     )
 }
 
