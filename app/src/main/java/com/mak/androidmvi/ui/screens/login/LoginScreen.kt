@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.asPainter
+import com.mak.androidmvi.designsystem.IconViewBuilder
 import com.mak.androidmvi.designsystem.InputField
 import com.mak.androidmvi.designsystem.InputFieldBuilder
 
@@ -104,8 +106,14 @@ fun LoginScreen(
                         emailFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
+                    leadingIcon = IconViewBuilder(
+                        icon = painterResource(R.drawable.sharp_delivery_truck_speed_24)
+                    ),
                     label = InputFieldBuilder.LabelBuilder(
                         label =  mutableStateFlow.emailLabel
+                    ),
+                    trailing = IconViewBuilder(
+                        icon = painterResource(R.drawable.sharp_delivery_truck_speed_24)
                     ),
                     hint = mutableStateFlow.emailHint,
                     value = mutableStateFlow.email,
