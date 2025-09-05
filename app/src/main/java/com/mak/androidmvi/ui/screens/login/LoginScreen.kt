@@ -31,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -84,9 +85,15 @@ fun LoginScreen(
         )
     }
 
+
+    val emailFocusRequester = remember { FocusRequester() }
+    val passwordFocusRequester = remember { FocusRequester() }
+    val confirmPasswordFocusRequester = remember { FocusRequester() }
+
     // Handle effects
     LaunchedEffect(effect.value) {
         when (effect.value) {
+            is LoginEffect.AttachFocusToEmail -> { emailFocusRequester.requestFocus()}
             is LoginEffect.NavigateHome -> onLoginSuccess()
             is LoginEffect.NavigateSignup -> onSignup()
             is LoginEffect.NavigateForgotPassword -> onForgotPassword()
