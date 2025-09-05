@@ -30,9 +30,9 @@ sealed class FiledState {
     object Warning : FiledState()
 }
 
-@Stable
+@Immutable
 data class InputFieldBuilder(
-    var filedState: FiledState = FiledState.Default,
+    val filedState: FiledState,
     val leadingIcon: IconViewBuilder? = null,
     val label: InputFieldBuilder.LabelBuilder?,
     val trailing: IconViewBuilder? = null,

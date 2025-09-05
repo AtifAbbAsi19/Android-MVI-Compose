@@ -42,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.asPainter
+import com.mak.androidmvi.designsystem.FiledState
 import com.mak.androidmvi.designsystem.IconViewBuilder
 import com.mak.androidmvi.designsystem.InputField
 import com.mak.androidmvi.designsystem.InputFieldBuilder
@@ -70,6 +71,10 @@ fun LoginScreen(
             icon = emailPainter,
             contentDescription = "Email Icon"
         )
+    }
+
+    val fieldState = remember {
+        FiledState.Default
     }
 
     val trailingEmailIcon = remember(emailPainter) {
@@ -123,6 +128,7 @@ fun LoginScreen(
                         emailFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
+                    filedState =  fieldState,
                     leadingIcon = leadingEmailIcon,    //remembered to avoid recoposition
                     label = InputFieldBuilder.LabelBuilder(
                         label =  mutableStateFlow.emailLabel
@@ -151,6 +157,7 @@ fun LoginScreen(
                         passwordFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
+                    filedState =  fieldState,
                     label = InputFieldBuilder.LabelBuilder(
                         label =  mutableStateFlow.passwordLabel
                     ),
