@@ -62,6 +62,22 @@ fun LoginScreen(
     // Make column scrollable
     val scrollState = rememberScrollState()
 
+    val emailPainter = painterResource(R.drawable.sharp_delivery_truck_speed_24)
+
+    // Now wrap the builder itself in remember (not the painterResource call)
+    val leadingEmailIcon = remember(emailPainter) {
+        IconViewBuilder(
+            icon = emailPainter,
+            contentDescription = "Email Icon"
+        )
+    }
+
+    val trailingEmailIcon = remember(emailPainter) {
+        IconViewBuilder(
+            icon = emailPainter,
+            contentDescription = "Trailing Icon"
+        )
+    }
 
     // Handle effects
     LaunchedEffect(effect.value) {
@@ -93,6 +109,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+
             //to avoid rendering
             Logo()
 
@@ -106,15 +123,11 @@ fun LoginScreen(
                         emailFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    leadingIcon = IconViewBuilder(
-                        icon = painterResource(R.drawable.sharp_delivery_truck_speed_24)
-                    ),
+                    leadingIcon = leadingEmailIcon,
                     label = InputFieldBuilder.LabelBuilder(
                         label =  mutableStateFlow.emailLabel
                     ),
-                    trailing = IconViewBuilder(
-                        icon = painterResource(R.drawable.sharp_delivery_truck_speed_24)
-                    ),
+                    trailing = trailingEmailIcon,
                     hint = mutableStateFlow.emailHint,
                     value = mutableStateFlow.email,
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
