@@ -58,8 +58,7 @@ fun InputField(
     builder: InputFieldBuilder
 ) {
 
-    Column {
-
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
 
         RowView(
             leadingIcon = builder.leadingIcon,

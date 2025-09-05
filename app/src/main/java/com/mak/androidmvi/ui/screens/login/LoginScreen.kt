@@ -63,10 +63,10 @@ fun LoginScreen(
     // Make column scrollable
     val scrollState = rememberScrollState()
 
-    val emailPainter = painterResource(R.drawable.sharp_delivery_truck_speed_24)
+    val emailPainter = painterResource(state.emailLeadingIcon) //to avoid recomposition
 
     // Now wrap the builder itself in remember (not the painterResource call)
-    val leadingEmailIcon = remember(emailPainter) {
+    val leadingEmailIcon = remember(state.emailLeadingIcon) {
         IconViewBuilder(
             icon = emailPainter,
             contentDescription = "Email Icon"
@@ -77,7 +77,7 @@ fun LoginScreen(
         FiledState.Default
     }
 
-    val trailingEmailIcon = remember(emailPainter) {
+    val trailingEmailIcon = remember(state.emailTrailingIcon) {
         IconViewBuilder(
             icon = emailPainter,
             contentDescription = "Trailing Icon"

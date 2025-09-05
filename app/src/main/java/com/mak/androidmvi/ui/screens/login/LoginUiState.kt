@@ -1,11 +1,14 @@
 package com.mak.androidmvi.ui.screens.login
 
 import androidx.compose.runtime.Stable
+import com.mak.androidmvi.R
 import com.mak.androidmvi.ui.extensions.isValidEmail
 
 // Represents the UI state
 @Stable
 data class LoginUiState(
+    val emailLeadingIcon: Int = R.drawable.sharp_delivery_truck_speed_24,
+    val emailTrailingIcon: Int = R.drawable.sharp_delivery_truck_speed_24,
     val email: String = "",
     val password: String = "",
     val emailError: String? = null,
