@@ -123,13 +123,13 @@ fun LoginScreen(
                         emailFocused = focus.isFocused
                     },
                 builder = InputFieldBuilder(
-                    leadingIcon = leadingEmailIcon,
+                    leadingIcon = leadingEmailIcon,    //remembered to avoid recoposition
                     label = InputFieldBuilder.LabelBuilder(
                         label =  mutableStateFlow.emailLabel
                     ),
-                    trailing = trailingEmailIcon,
+                    trailing = trailingEmailIcon,   //remembered to avoid recoposition
                     hint = mutableStateFlow.emailHint,
-                    value = mutableStateFlow.email,
+                    value = mutableStateFlow.email,  //only change that will happen
                     onValueChange = { viewModel.onIntent(LoginIntent.EnterEmail(it)) },
                     isError = mutableStateFlow.emailError != null,
                     keyboardOptions = KeyboardOptions(
