@@ -73,7 +73,7 @@ fun LoginScreen(
         )
     }
 
-    val fieldState = remember {
+    val fieldState = remember(state.emailFiledState) {
         FiledState.Default
     }
 
