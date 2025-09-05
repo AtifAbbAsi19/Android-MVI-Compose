@@ -62,9 +62,9 @@ fun InputField(
 
 
         RowView(
-            builder.leadingIcon,
-            builder.label,
-            builder.trailing
+            leadingIcon = builder.leadingIcon,
+            label = builder.label,
+            trailing = builder.trailing
         )
         // LabelView(builder.label)
 
