@@ -10,6 +10,7 @@ import androidx.compose.runtime.State
 import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.manager.EventManager.AppEvent
 import com.mak.androidmvi.ui.extensions.isValidEmail
+import com.mak.androidmvi.ui.extensions.isValidPassword
 import com.mak.androidmvi.ui.manager.SnackBarManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 class LoginViewModel : ViewModel() {
@@ -32,7 +35,7 @@ class LoginViewModel : ViewModel() {
     val stateFlow: StateFlow<LoginUiState> get()  = _stateMutableStateFlow.asStateFlow()
 
 
-/*    val isEmailValid: StateFlow<Boolean> = _state.value.email
+ /*  val isEmailValid: StateFlow<Boolean> = stateFlow.value.email
         .map { _state.value.email.isValidEmail() }
         .stateIn(
             scope = viewModelScope,
@@ -48,22 +51,21 @@ class LoginViewModel : ViewModel() {
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = false
-        )
+        )*/
 
 
 
+/*    val isEmailValid: Flow<Boolean> = stateFlow.value.email.map { stateFlow.value.email.isValidEmail() } as Flow<Boolean>
+    val isPasswordValid: Flow<Boolean> = stateFlow.value.password.map {stateFlow.value.password.isValidPassword() } as Flow<Boolean>
 
-    val isEmailValid: Flow<Boolean> = _state.map { it.email.isValidEmail() }
-    val isPasswordValid: Flow<Boolean> = _state.map { it.password.isValidPassword() }
-
-    val isFormValid: StateFlow<Boolean> = combine(isEmailValid, isPasswordValid) { emailOk, passOk ->
-        emailOk && passOk
+    val enableNextButton: StateFlow<Boolean> = combine(isEmailValid, isPasswordValid) { validEmail, validPassword ->
+        validEmail && validPassword
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = false
-    )
- */
+    )*/
+
     private val _effect = Channel<LoginEffect>()
     val effect = _effect.receiveAsFlow()
 

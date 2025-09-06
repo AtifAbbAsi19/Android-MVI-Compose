@@ -3,7 +3,6 @@ package com.mak.androidmvi.ui.screens.login
 import androidx.compose.runtime.Stable
 import com.mak.androidmvi.R
 import com.mak.androidmvi.designsystem.FiledState
-import com.mak.androidmvi.ui.extensions.isValidEmail
 
 // Represents the UI state
 @Stable

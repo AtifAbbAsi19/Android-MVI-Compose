@@ -121,12 +121,10 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-
             //to avoid rendering
             Logo()
 
-
-
+            //email filed
             InputField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -154,8 +152,7 @@ fun LoginScreen(
 
             Spacer(Modifier.height(12.dp))
 
-            // Password
-
+            // Password Field
             InputField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -179,6 +176,7 @@ fun LoginScreen(
                 )
             )
 
+            //Re-Confimration Password
             OutlinedTextField(
                 value = mutableStateFlow.password,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
@@ -196,15 +194,19 @@ fun LoginScreen(
                         passwordFocused = focus.isFocused
                     }
             )
+
+            //Footer Message
             if (mutableStateFlow.passwordError != null) {
                 Text(mutableStateFlow.passwordError?:"", color = MaterialTheme.colorScheme.error)
             }
 
             Spacer(Modifier.height(16.dp))
 
+            //Login Button
             Button(
                 onClick = { viewModel.onIntent(LoginIntent.SubmitLogin) },
                 modifier = Modifier.fillMaxWidth(),
+                //enabled = viewModel.enableNextButton.collectAsState().value
                 enabled = mutableStateFlow.isLoginEnabled
             ) {
                 Text(if (mutableStateFlow.isLoading) "Logging in..." else "Login")
@@ -220,6 +222,7 @@ fun LoginScreen(
 
             Spacer(Modifier.height(16.dp))
 
+            //Signup Row
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
