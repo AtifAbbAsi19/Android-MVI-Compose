@@ -44,9 +44,10 @@ import kotlinx.coroutines.launch
 fun AppScaffold(
     navController: NavHostController,
     topBar: (@Composable ((TopAppBarScrollBehavior?) -> Unit))? = null,
+    showTopBar : Boolean = true,
     bottomBar: @Composable (() -> Unit)? = null,
     showBottomBar: Boolean = false,
-    content: @Composable (PaddingValues?, TopAppBarScrollBehavior?) -> Unit,
+    content: @Composable (TopAppBarScrollBehavior?) -> Unit,
 ) {
     val scrollBehavior = topBar?.let {
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
@@ -104,10 +105,14 @@ fun AppScaffold(
             .safeDrawingPadding()
             .then(if (scrollBehavior != null) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) else Modifier),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        topBar = { topBar?.invoke(scrollBehavior) },
+        topBar = {
+            if (showTopBar) {
+                topBar?.invoke(scrollBehavior)
+            }
+        },
         bottomBar = {
-            bottomBar?.invoke() ?: run {
-                if (showBottomBar) BottomNavigationBar(navController = navController)
+            if (showBottomBar) {
+                bottomBar?.invoke()
             }
         }
     ) { innerPadding ->
@@ -122,7 +127,7 @@ fun AppScaffold(
             color = MaterialTheme.colorScheme.background
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                content(innerPadding, scrollBehavior)
+                content(scrollBehavior)
 
                 // Render dialog or bottom sheet if needed
                 bottomSheetContent?.let { content ->
