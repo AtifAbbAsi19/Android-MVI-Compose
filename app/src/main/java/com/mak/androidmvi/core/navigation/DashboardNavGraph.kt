@@ -24,15 +24,11 @@ import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
-
-
         navigation<Destination.Dashboard.Root>(startDestination = Destination.Dashboard.Home) {
-
 
             composable<Destination.Dashboard.Home> {
 
                 val viewModel = it.sharedViewModel<HomeSharedViewModel>( navController = navController)
-
 
                 AppScaffold(
                     navController = navController,
@@ -55,7 +51,6 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                             scrollBehavior = scrollBehavior,
                             viewModel = viewModel
                         )
-
                 }
             }
 

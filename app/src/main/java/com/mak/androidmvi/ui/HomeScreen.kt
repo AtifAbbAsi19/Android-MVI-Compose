@@ -19,8 +19,6 @@ import androidx.lifecycle.ViewModel
 @Composable
 fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, viewModel: ViewModel) {
 
-
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -53,6 +51,5 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
             )
         }
     }
-
 
 }
