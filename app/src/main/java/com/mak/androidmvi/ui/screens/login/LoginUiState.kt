@@ -14,6 +14,7 @@ data class LoginUiState(
     val email: String = "",
     val emailFiledState :FiledState  =   FiledState.Default,
     val password: String = "",
+    val reconfirmPassword: String = "",
     val emailError: String? = null,
     val passwordError: String? = null,
     val isLoading: Boolean = false,
@@ -28,5 +29,6 @@ data class LoginUiState(
     val isLoginEnabled: Boolean
         get() = email.isNotBlank() && email.isValidEmail() &&
                 password.isNotBlank() &&  password.isValidPassword() &&
+                reconfirmPassword.isNotBlank() &&  reconfirmPassword.isValidPassword() &&
                 !isLoading
 }

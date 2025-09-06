@@ -178,7 +178,7 @@ fun LoginScreen(
 
             //Re-Confimration Password
             OutlinedTextField(
-                value = mutableStateFlow.password,
+                value = mutableStateFlow.reconfirmPassword,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
                 label = { Text(mutableStateFlow.reConfirmPasswordLabel) },
                 placeholder = { Text("reconfirm password") },
