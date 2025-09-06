@@ -1,5 +1,6 @@
 package com.mak.androidmvi.ui.core
 
+import android.util.Log
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.icons.Icons
@@ -50,8 +51,11 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
 
             val isSelected = currentRoute == item.route //|| currentRoute == item.mainRoute
 
+            Log.d("bottomNav","{${item.route.toString()}}")
+            Log.d("bottomNav","Selected {${isSelected}}")
+
             NavigationBarItem(
-                selected = isSelected,
+                selected = currentRoute != item.route,
                 onClick = {
                         if (currentRoute != item.route) {
                             navController.navigate(item.route) {
@@ -78,7 +82,7 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
                         }
                     ) {
                         Icon(
-                            imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
+                            imageVector = if (currentRoute != item.route) item.selectedIcon else item.unselectedIcon,
                             contentDescription = item.title
                         )
                     }
