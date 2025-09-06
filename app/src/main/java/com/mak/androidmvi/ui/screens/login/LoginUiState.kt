@@ -3,6 +3,8 @@ package com.mak.androidmvi.ui.screens.login
 import androidx.compose.runtime.Stable
 import com.mak.androidmvi.R
 import com.mak.androidmvi.designsystem.FiledState
+import com.mak.androidmvi.ui.extensions.isValidEmail
+import com.mak.androidmvi.ui.extensions.isValidPassword
 
 // Represents the UI state
 @Stable
@@ -21,8 +23,10 @@ data class LoginUiState(
     val emailHint = "Enter Email"
     val passwordLabel = "Password"
     val passwordHint = "Enter Password"
-    val reConfirmPasswordLabel = "Password"
+    val reConfirmPasswordLabel = "Reconfirm Password"
 
     val isLoginEnabled: Boolean
-        get() = email.isNotBlank() && password.isNotBlank() && !isLoading
+        get() = email.isNotBlank() && email.isValidEmail() &&
+                password.isNotBlank() &&  password.isValidPassword() &&
+                !isLoading
 }

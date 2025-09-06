@@ -181,7 +181,7 @@ fun LoginScreen(
                 value = mutableStateFlow.password,
                 onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
                 label = { Text(mutableStateFlow.reConfirmPasswordLabel) },
-                placeholder = { Text("password") },
+                placeholder = { Text("reconfirm password") },
                 isError = mutableStateFlow.passwordError != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
