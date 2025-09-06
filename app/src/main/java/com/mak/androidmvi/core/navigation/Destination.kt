@@ -54,7 +54,7 @@ sealed interface Destination {
     }
 
     // -------- Profile SubGraph --------
-    sealed interface ProfileSettings : Dashboard {
+    sealed interface ProfileSettings : Destination {
         @Serializable data object Root : ProfileSettings
         @Serializable data object UploadPhoto : ProfileSettings
         @Serializable data object UpdateEmail : ProfileSettings
