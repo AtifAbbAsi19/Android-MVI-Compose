@@ -55,9 +55,10 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
             Log.d("bottomNav","Selected {${isSelected}}")
 
             NavigationBarItem(
-                selected = currentRoute != item.route,
+                selected = isSelected,
                 onClick = {
-                        if (currentRoute != item.route) {
+                   // if (currentRoute != item.route) {
+                        if (!isSelected) {
                             navController.navigate(item.route) {
                                 popUpTo(navController.graph.startDestinationId) {
                                     saveState = true
@@ -82,7 +83,7 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
                         }
                     ) {
                         Icon(
-                            imageVector = if (currentRoute != item.route) item.selectedIcon else item.unselectedIcon,
+                            imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
                             contentDescription = item.title
                         )
                     }
