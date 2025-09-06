@@ -78,7 +78,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier
-                    .height(240.dp) // adjust height to fit all rows
+                    .height(250.dp) // adjust height to fit all rows
                     .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
