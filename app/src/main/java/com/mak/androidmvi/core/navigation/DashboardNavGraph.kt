@@ -57,10 +57,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                     val safePadding = innerPadding ?: PaddingValues(0.dp)
 
                     HomeScreen(
-                            modifier = Modifier
-                                .then(
-                                    Modifier.padding(safePadding)
-                                ),
+                            modifier = Modifier,
                             scrollBehavior = scrollBehavior,
                             viewModel = dashboardSharedViewModel
                         )

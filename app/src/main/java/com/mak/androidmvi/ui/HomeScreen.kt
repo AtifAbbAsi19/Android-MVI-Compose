@@ -18,7 +18,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,6 +28,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -53,7 +56,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
         verticalArrangement = Arrangement.Top,
         modifier = modifier
             .fillMaxHeight()
-            .fillMaxWidth()
+            .fillMaxWidth().background(Color.Cyan)
             .then(
                 if (scrollBehavior != null) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
                 else Modifier
@@ -125,7 +128,12 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White // background color of card
+                ),
+                shape = RoundedCornerShape(4.dp), // optional
+                elevation = CardDefaults.cardElevation(6.dp) // optional
             ) {
                 Row(
                     modifier = Modifier
@@ -133,11 +141,19 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(
+                  /*  Box(
                         modifier = Modifier
                             .size(50.dp)
                             .background(MaterialTheme.colorScheme.primary)
+                    )*/
+
+                    Image(
+                        painter = painterResource(id = R.drawable.sharp_delivery_truck_speed_24),
+                        contentDescription = "Image",
+                        modifier = Modifier
+                            .size(50.dp)
                     )
+
                     Spacer(modifier = Modifier.width(16.dp))
                     Text("List Item ${index + 1}")
                 }
