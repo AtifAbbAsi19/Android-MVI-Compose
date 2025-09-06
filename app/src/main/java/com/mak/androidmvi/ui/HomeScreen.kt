@@ -56,7 +56,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
         verticalArrangement = Arrangement.Top,
         modifier = modifier
             .fillMaxHeight()
-            .fillMaxWidth().background(Color.Cyan)
+            .fillMaxWidth()
             .then(
                 if (scrollBehavior != null) Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
                 else Modifier
@@ -88,7 +88,12 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(120.dp)
+                            .height(120.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.White // background color of card
+                        ),
+                        shape = RoundedCornerShape(4.dp), // optional
+                        elevation = CardDefaults.cardElevation(6.dp) // optional
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
