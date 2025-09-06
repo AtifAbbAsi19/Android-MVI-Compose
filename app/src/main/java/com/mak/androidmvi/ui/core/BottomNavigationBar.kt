@@ -22,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -35,6 +37,10 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
     val _selectedRoute: Destination? = selectedRoute
+
+    val selectedNavigationIndex = rememberSaveable {
+        mutableIntStateOf(0)
+    }
 
     NavigationBar(
         //Don't forget to apply the modifier inside your BottomBar composable

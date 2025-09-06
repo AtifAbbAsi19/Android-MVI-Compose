@@ -57,7 +57,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            val navController = rememberNavController()
+            // Initializes a navigation controller to handle navigation between screens.
+            val rootNavController = rememberNavController()
             // Creates a state to manage snackbar messages.
             val snackbarHostState = remember { SnackbarHostState() }
 
@@ -65,8 +66,8 @@ class MainActivity : ComponentActivity() {
 
             // Global back press handling
             BackHandler {
-                if (navController.previousBackStackEntry != null) {
-                    navController.popBackStack()
+                if (rootNavController.previousBackStackEntry != null) {
+                    rootNavController.popBackStack()
                 } else {
                     finish() // exit app
                 }
@@ -78,7 +79,7 @@ class MainActivity : ComponentActivity() {
                 // Provide the app configuration for the entire composable hierarchy
                 CompositionLocalProvider(
                     LocalAppConfig provides AppConfig(isDebugMode = true),
-                    LocalNavController provides navController
+                    LocalNavController provides rootNavController
                 ) {
 
 
@@ -121,9 +122,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    // Initializes a navigation controller to handle navigation between screens.
-                    val navController = rememberNavController()
-                    RootNavigationGraph(navController)
+                    RootNavigationGraph(rootNavController)
                 }
             }
         }
