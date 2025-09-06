@@ -16,7 +16,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
         composable<Destination.Auth.Login> {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(Destination.Dashboard.Home) {
+                    navController.navigate(Destination.Dashboard.Root) {
                         popUpTo(Destination.Auth.Root) { inclusive = true }
                     }
                 },
