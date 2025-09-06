@@ -33,6 +33,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.navigation.RootNavigationGraph
+import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.extensions.AppConfig
 import com.mak.androidmvi.ui.extensions.LocalAppConfig
 import com.mak.androidmvi.ui.extensions.LocalNavController
@@ -46,11 +47,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen() // Keep the splash screen visible
-        val splashScreen = installSplashScreen()
-        val splashViewModel = SplashViewModel()
+       // val splashScreen = installSplashScreen()
+        //val splashViewModel = SplashViewModel()
         // Keep the splash screen on display until isLoading is false
       //  splashScreen.setKeepOnScreenCondition { splashViewModel.uiState.value.isLoading }
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
             val rootNavController = rememberNavController()
             // Creates a state to manage snackbar messages.
             val snackbarHostState = remember { SnackbarHostState() }
-
 
 
             // Global back press handling
@@ -75,6 +74,22 @@ class MainActivity : ComponentActivity() {
 
 
             AndroidMviTheme {
+
+        /*        AppScaffold(
+                    navController = rootNavController
+                ) {
+                    //App Context
+                    val context = LocalContext.current
+
+                    // Provide the app configuration for the entire composable hierarchy
+                    CompositionLocalProvider(
+                        LocalAppConfig provides AppConfig(isDebugMode = true),
+                        LocalNavController provides rootNavController,
+                        LocalContext provides context
+                    ) {
+                        RootNavigationGraph(rootNavController)
+                    }
+                }*/
 
                 //App Context
                 val context = LocalContext.current
@@ -113,7 +128,8 @@ class MainActivity : ComponentActivity() {
                                             }
                                         }
 
-                                        else -> { /* No-op for unsupported events */
+
+                                        else -> { //* No-op for unsupported events *//*
                                         }
                                     }
                                 }

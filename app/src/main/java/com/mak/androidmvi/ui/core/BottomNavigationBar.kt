@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mak.androidmvi.core.model.BottomNavigationItem
@@ -47,9 +48,14 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
             .navigationBarsPadding()
             .safeDrawingPadding()
     ) {
-        items.forEachIndexed { index, item ->
+        //items.forEachIndexed { index, item ->
+        items.forEach {  item ->
 
-            val isSelected = currentRoute == item.route //|| currentRoute == item.mainRoute
+          //  val isSelected = currentRoute == item.route //|| currentRoute == item.mainRoute
+
+            val isSelected = currentRoute
+                ?.hierarchy
+                ?.any { it == item.route } == true
 
             Log.d("bottomNav","{${item.route.toString()}}")
             Log.d("bottomNav","Selected {${isSelected}}")

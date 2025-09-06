@@ -11,6 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mak.androidmvi.R
 import com.mak.androidmvi.core.sharedViewModel
 import com.mak.androidmvi.ui.ChatScreen
 import com.mak.androidmvi.ui.HomeScreen
@@ -18,6 +19,8 @@ import com.mak.androidmvi.ui.ProfileScreen
 import com.mak.androidmvi.ui.SearchScreen
 import com.mak.androidmvi.ui.SettingsScreen
 import com.mak.androidmvi.ui.core.AppScaffold
+import com.mak.androidmvi.ui.core.BottomNavigationBar
+import com.mak.androidmvi.ui.screens.home.HomeTopAppBar
 import com.mak.androidmvi.ui.screens.success.SuccessScreen
 import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 
@@ -33,11 +36,21 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                 AppScaffold(
                     navController = navController,
                     topBar = { scrollBehavior ->
-                        LargeTopAppBar(
+                        scrollBehavior?.let { scrollBehavior ->
+                            HomeTopAppBar(
+                                userName = "Atif",
+                                balance = "$100",
+                                profileImageRes = R.drawable.login,
+                                scrollBehavior = scrollBehavior
+                            )
+                        }
+
+                      /*  LargeTopAppBar(
                             title = { Text("Home") },
                             scrollBehavior = scrollBehavior
-                        )
+                        )*/
                     },
+                    bottomBar = { BottomNavigationBar(navController = navController) },
                     showBottomBar = true
                 ) { innerPadding, scrollBehavior ->
 
