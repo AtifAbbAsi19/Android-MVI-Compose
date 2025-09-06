@@ -23,7 +23,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,7 +50,10 @@ import com.mak.androidmvi.designsystem.InputFieldBuilder
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
-    onLoginSuccess: () -> Unit, onSignup: () -> Unit, onForgotPassword: () -> Unit) {
+    onLoginSuccess: () -> Unit,
+    onSignup: () -> Unit,
+    onForgotPassword: () -> Unit
+) {
 
    //first approach
     val effect = viewModel.effect.collectAsStateWithLifecycle( initialValue = Unit)
@@ -97,12 +99,14 @@ fun LoginScreen(
             is LoginEffect.NavigateHome -> onLoginSuccess()
             is LoginEffect.NavigateSignup -> onSignup()
             is LoginEffect.NavigateForgotPassword -> onForgotPassword()
+            is Unit->{}
             null -> {}
         }
     }
 
     var emailFocused by rememberSaveable { mutableStateOf(false) }
     var passwordFocused by rememberSaveable { mutableStateOf(false) }
+    var reConfirmPasswordFocused by rememberSaveable { mutableStateOf(false) }
 
 
     // Your UI for Login
@@ -179,10 +183,10 @@ fun LoginScreen(
             //Re-Confimration Password
             OutlinedTextField(
                 value = mutableStateFlow.reconfirmPassword,
-                onValueChange = { viewModel.onIntent(LoginIntent.EnterPassword(it)) },
+                onValueChange = { viewModel.onIntent(LoginIntent.ReConfirmationPassword(it)) },
                 label = { Text(mutableStateFlow.reConfirmPasswordLabel) },
                 placeholder = { Text("reconfirm password") },
-                isError = mutableStateFlow.passwordError != null,
+                isError = mutableStateFlow.reConfirmationPasswordError != null,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
@@ -190,8 +194,8 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusChanged { focus ->
-                        if (passwordFocused && !focus.isFocused) viewModel.validatePasswordOnFocusLost()
-                        passwordFocused = focus.isFocused
+                        if (reConfirmPasswordFocused && !focus.isFocused) viewModel.validateConfirmationPasswordOnFocusLost()
+                        reConfirmPasswordFocused = focus.isFocused
                     }
             )
 

@@ -9,19 +9,12 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.manager.EventManager.AppEvent
-import com.mak.androidmvi.ui.extensions.isValidEmail
-import com.mak.androidmvi.ui.extensions.isValidPassword
 import com.mak.androidmvi.ui.manager.SnackBarManager
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 //import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 class LoginViewModel : ViewModel() {
@@ -94,6 +87,17 @@ class LoginViewModel : ViewModel() {
                 //second approach
                 _state.value = _state.value.copy(password = intent.password, passwordError = null)
             }
+            is LoginIntent.ReConfirmationPassword -> {
+
+                //first approach
+                _stateMutableStateFlow.update {
+                    it.copy(
+                        reconfirmPassword = intent.password, passwordError = null
+                    )
+                }
+                //second approach
+                _state.value = _state.value.copy(reconfirmPassword = intent.password, passwordError = null)
+            }
             LoginIntent.SubmitLogin -> submitLogin()
             LoginIntent.NavigateToSignup -> navigate(LoginEffect.NavigateSignup)
             LoginIntent.NavigateToForgotPassword -> navigate(LoginEffect.NavigateForgotPassword)
@@ -140,5 +144,10 @@ class LoginViewModel : ViewModel() {
     fun validatePasswordOnFocusLost() {
         val passwordError = if (_state.value.password.isBlank()) "Password is required" else null
         _state.value = _state.value.copy(passwordError = passwordError)
+    }
+
+    fun validateConfirmationPasswordOnFocusLost() {
+        val passwordError = if (_state.value.reconfirmPassword.isBlank()) "Password is required" else null
+        _state.value = _state.value.copy(reConfirmationPasswordError = passwordError)
     }
 }

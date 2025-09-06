@@ -17,6 +17,7 @@ data class LoginUiState(
     val reconfirmPassword: String = "",
     val emailError: String? = null,
     val passwordError: String? = null,
+    val reConfirmationPasswordError: String? = null,
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
 ){
