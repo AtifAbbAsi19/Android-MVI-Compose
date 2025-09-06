@@ -40,8 +40,8 @@ import com.mak.androidmvi.ui.manager.SnackBarManager
 import com.mak.androidmvi.ui.screens.splash.SplashViewModel
 import com.mak.androidmvi.ui.theme.AndroidMviTheme
 import kotlinx.coroutines.launch
-
 class MainActivity : ComponentActivity() {
+//class MainActivity : ComponentActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
