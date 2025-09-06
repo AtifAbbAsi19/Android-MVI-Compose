@@ -8,10 +8,10 @@ fun String.isValidEmail(): Boolean {
 
 fun String.isValidPassword(
     minLength: Int = 8,
-    requireUppercase: Boolean = true,
-    requireLowercase: Boolean = true,
-    requireDigit: Boolean = true,
-    requireSpecialChar: Boolean = true
+    requireUppercase: Boolean = false,
+    requireLowercase: Boolean = false,
+    requireDigit: Boolean = false,
+    requireSpecialChar: Boolean = false
 ): Boolean {
 
     if (length < minLength) return false
