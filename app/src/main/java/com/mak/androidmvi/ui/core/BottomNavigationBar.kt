@@ -48,12 +48,11 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
     ) {
         items.forEachIndexed { index, item ->
 
-            val isSelected = currentRoute == item.route || currentRoute == item.mainRoute
+            val isSelected = currentRoute == item.route //|| currentRoute == item.mainRoute
 
             NavigationBarItem(
                 selected = isSelected,
                 onClick = {
-                    if (!isSelected) {
                         if (currentRoute != item.route) {
                             navController.navigate(item.route) {
                                 popUpTo(navController.graph.startDestinationId) {
@@ -63,7 +62,6 @@ fun BottomNavigationBar(navController: NavHostController, selectedRoute: Destina
                                 restoreState = true
                             }
                         }
-                    }
                 },
                 label = { Text(text = item.title) },
                 alwaysShowLabel = false,
