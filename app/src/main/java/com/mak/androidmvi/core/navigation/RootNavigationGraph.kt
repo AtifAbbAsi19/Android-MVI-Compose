@@ -4,11 +4,17 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.createGraph
 import com.mak.androidmvi.core.sharedViewModel
+import com.mak.androidmvi.ui.core.baseviewmodel.model.BaseData
+import com.mak.androidmvi.ui.core.sharedviewmodel.SharedViewModel
 import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 
 
@@ -22,20 +28,13 @@ import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {
 
-/*
-    val graph =
-        navController.createGraph(startDestination = Screen.Home.rout) {
-            composable(route = StartingRoute) {
+  /*  val backStackEntry by navController.currentBackStackEntryAsState()
+    val rootEntry = remember(backStackEntry) {
+        navController.getBackStackEntry(Destination.Root)
+    }
+    val mainSharedVM: SharedViewModel<BaseData> = viewModel(rootEntry)
 
-            }
-
-        }
-    NavHost(
-        navController = navController,
-        graph = graph,
-        modifier = Modifier.padding(innerPadding)
-    )*/
-
+*/
     NavHost(
         modifier = Modifier.safeDrawingPadding(),
         navController = navController,
@@ -43,10 +42,8 @@ fun RootNavigationGraph(navController: NavHostController) {
 /*        enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(700)) },
         exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(700)) },
         popEnterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) },*/
-        popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) }
+       // popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) }
     ) {
-
-       // val appSharedViewModel = it.sharedViewModel<AppSharedViewModel>( navController = navController)
 
 
         splashNavGraph(navController)
