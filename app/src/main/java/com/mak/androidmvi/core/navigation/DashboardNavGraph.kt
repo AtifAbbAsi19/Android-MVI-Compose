@@ -28,7 +28,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
             composable<Destination.Dashboard.Home> {
 
-                val viewModel = it.sharedViewModel<HomeSharedViewModel>( navController = navController)
+                val dashboardSharedViewModel = it.sharedViewModel<HomeSharedViewModel>( navController = navController)
 
                 AppScaffold(
                     navController = navController,
@@ -49,7 +49,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
                                     Modifier.padding(safePadding)
                                 ),
                             scrollBehavior = scrollBehavior,
-                            viewModel = viewModel
+                            viewModel = dashboardSharedViewModel
                         )
                 }
             }
