@@ -45,7 +45,6 @@ fun RootNavigationGraph(navController: NavHostController) {
        // popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) }
     ) {
 
-
         splashNavGraph(navController)
 
         authNavGraph(navController)
@@ -53,7 +52,6 @@ fun RootNavigationGraph(navController: NavHostController) {
         dashboardNavGraph(navController)
 
         userProfileSettingsNavGraph(navController)
-
 
     }//end of NavHost
 }

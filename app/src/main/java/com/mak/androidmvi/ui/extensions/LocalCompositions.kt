@@ -1,5 +1,6 @@
 package com.mak.androidmvi.ui.extensions
 
+import android.content.Context
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
@@ -18,3 +19,4 @@ data class AppConfig(
 val LocalAppConfig = compositionLocalOf { AppConfig() }
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { error("No Nav Host Controller Found") }
+val LocalContext = staticCompositionLocalOf<Context?> { error("App Context not Found") }

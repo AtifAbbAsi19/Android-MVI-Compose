@@ -76,25 +76,24 @@ class MainActivity : ComponentActivity() {
 
             AndroidMviTheme {
 
+                //App Context
+                val context = LocalContext.current
+
                 // Provide the app configuration for the entire composable hierarchy
                 CompositionLocalProvider(
                     LocalAppConfig provides AppConfig(isDebugMode = true),
-                    LocalNavController provides rootNavController
+                    LocalNavController provides rootNavController,
+                    LocalContext provides context
                 ) {
-
-
-                    val context = LocalContext.current
 
                     // Provides a coroutine scope for displaying snackbar.
                     val coroutineScope = rememberCoroutineScope()
 
+                    // Observes global app events from EventManager and reacts accordingly.
                     LaunchedEffect(Unit) {
-
                         SnackBarManager.message_sharedFlow.collect { message ->
 
-
                         }
-
                     }
 
 

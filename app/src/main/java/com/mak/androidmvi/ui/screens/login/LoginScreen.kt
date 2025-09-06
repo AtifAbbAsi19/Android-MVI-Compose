@@ -88,18 +88,22 @@ fun LoginScreen(
     }
 
 
-    val emailFocusRequester = remember { FocusRequester() }
+  /*  val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
     val confirmPasswordFocusRequester = remember { FocusRequester() }
-
+*/
     // Handle effects
     LaunchedEffect(effect.value) {
         when (effect.value) {
-            is LoginEffect.AttachFocusToEmail -> { emailFocusRequester.requestFocus()}
+            is LoginEffect.AttachFocusToEmail -> {
+               // emailFocusRequester.requestFocus()
+            }
             is LoginEffect.NavigateHome -> onLoginSuccess()
             is LoginEffect.NavigateSignup -> onSignup()
             is LoginEffect.NavigateForgotPassword -> onForgotPassword()
-            is Unit->{}
+            is Unit->{
+               // emailFocusRequester.requestFocus()
+            }
             null -> {}
         }
     }
