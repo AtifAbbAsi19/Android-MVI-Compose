@@ -34,28 +34,32 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.mak.androidmvi.R
+import com.mak.androidmvi.ui.core.AppTopBarType
+import com.mak.androidmvi.ui.core.BottomBarProvider
+import com.mak.androidmvi.ui.core.BottomBarType
 import com.mak.androidmvi.ui.core.BottomNavigationBar
-import com.mak.androidmvi.ui.extensions.LocalContext
+import com.mak.androidmvi.ui.core.CenterAlignedTopAppBar
+import com.mak.androidmvi.ui.core.HomeTopAppBar
+import com.mak.androidmvi.ui.core.SmallDefaultTopBar
+import com.mak.androidmvi.ui.core.TopBarProvider
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(
     navController: NavHostController,
-    topBar: (@Composable ((TopAppBarScrollBehavior?) -> Unit))? = null,
-    showTopBar : Boolean = true,
-    bottomBar: @Composable (() -> Unit)? = null,
+    showTopBar: Boolean = true,
     showBottomBar: Boolean = false,
+    scrollBehavior: TopAppBarScrollBehavior?,
+    snackbarHostState: SnackbarHostState,
     content: @Composable (TopAppBarScrollBehavior?) -> Unit,
 ) {
-    val scrollBehavior = topBar?.let {
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
-            rememberTopAppBarState()
-        )
-    }
 
-    val snackbarHostState = remember { SnackbarHostState() }
+
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -72,9 +76,11 @@ fun AppScaffold(
                         snackbarHostState.showSnackbar(event.message, event.action)
                     }
                 }
+
                 is UiEvent.ShowToast -> {
                     Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                 }
+
                 is UiEvent.ShowDialog -> {
                     // Could use a shared dialog state holder
                     bottomSheetContent = {
@@ -90,9 +96,11 @@ fun AppScaffold(
                         )
                     }
                 }
+
                 is UiEvent.ShowBottomSheet -> {
                     bottomSheetContent = event.content
                 }
+
                 UiEvent.DismissBottomSheet -> {
                     bottomSheetContent = null
                 }
@@ -107,12 +115,46 @@ fun AppScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             if (showTopBar) {
-                topBar?.invoke(scrollBehavior)
+
+                val currentRoute = navController.currentBackStackEntryAsState().value?.destination
+                val topBarType = TopBarProvider.getCurrentTopBarType(currentRoute)
+
+                when (topBarType) {
+                    is AppTopBarType.Large -> CenterAlignedTopAppBar(
+                        navController = navController,
+                        showBackButton = true,
+                        scrollBehavior = scrollBehavior,
+                        title = currentRoute?.toString()?.replaceFirstChar { it.uppercase() } ?: ""
+                    )
+                    is AppTopBarType.Small -> SmallDefaultTopBar(
+                        title = currentRoute?.toString()?.replaceFirstChar { it.uppercase() } ?: "",
+                        scrollBehavior = scrollBehavior
+                    )
+                    is AppTopBarType.None -> {}
+                    AppTopBarType.Home -> {
+
+                        scrollBehavior?.let {
+                            HomeTopAppBar(
+                                userName = "Atif",
+                                balance = "$100 USD",
+                                profileImageRes = R.drawable.login,
+                                scrollBehavior = scrollBehavior
+                            )
+                        }
+                    }
+                }
             }
         },
         bottomBar = {
             if (showBottomBar) {
-                bottomBar?.invoke()
+
+                val currentRoute = navController.currentBackStackEntryAsState().value?.destination
+                val bottomBarType = BottomBarProvider.getBottomBarType(currentRoute)
+
+                when (bottomBarType) {
+                    is BottomBarType.Visible -> BottomNavigationBar(navController = navController)
+                    is BottomBarType.Hidden -> {}
+                }
             }
         }
     ) { innerPadding ->

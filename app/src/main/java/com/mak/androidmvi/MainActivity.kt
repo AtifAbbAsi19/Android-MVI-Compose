@@ -7,10 +7,13 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -33,6 +36,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.mak.androidmvi.core.manager.EventManager
 import com.mak.androidmvi.core.navigation.RootNavigationGraph
+import com.mak.androidmvi.designsystem.AppScaffold
 import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.extensions.AppConfig
 import com.mak.androidmvi.ui.extensions.LocalAppConfig
@@ -41,16 +45,18 @@ import com.mak.androidmvi.ui.manager.SnackBarManager
 import com.mak.androidmvi.ui.screens.splash.SplashViewModel
 import com.mak.androidmvi.ui.theme.AndroidMviTheme
 import kotlinx.coroutines.launch
+
 class MainActivity : ComponentActivity() {
 //class MainActivity : ComponentActivity() {
 
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen() // Keep the splash screen visible
-       // val splashScreen = installSplashScreen()
+        // val splashScreen = installSplashScreen()
         //val splashViewModel = SplashViewModel()
         // Keep the splash screen on display until isLoading is false
-      //  splashScreen.setKeepOnScreenCondition { splashViewModel.uiState.value.isLoading }
+        //  splashScreen.setKeepOnScreenCondition { splashViewModel.uiState.value.isLoading }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -61,6 +67,13 @@ class MainActivity : ComponentActivity() {
             val rootNavController = rememberNavController()
             // Creates a state to manage snackbar messages.
             val snackbarHostState = remember { SnackbarHostState() }
+            //App Context
+            val context = LocalContext.current
+
+            val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+                rememberTopAppBarState()
+            )
+
 
 
             // Global back press handling
@@ -75,70 +88,24 @@ class MainActivity : ComponentActivity() {
 
             AndroidMviTheme {
 
-        /*        AppScaffold(
-                    navController = rootNavController
-                ) {
-                    //App Context
-                    val context = LocalContext.current
+                AppScaffold(
+                    navController = rootNavController,
+                    showTopBar = true,
+                    showBottomBar = true,
+                    scrollBehavior = scrollBehavior,
+                    snackbarHostState = snackbarHostState
+                    ) {
 
                     // Provide the app configuration for the entire composable hierarchy
                     CompositionLocalProvider(
                         LocalAppConfig provides AppConfig(isDebugMode = true),
-                        LocalNavController provides rootNavController,
-                        LocalContext provides context
+                        LocalNavController provides rootNavController
                     ) {
-                        RootNavigationGraph(rootNavController)
+                        RootNavigationGraph(rootNavController,scrollBehavior)
                     }
-                }*/
-
-                //App Context
-                val context = LocalContext.current
-
-                // Provide the app configuration for the entire composable hierarchy
-                CompositionLocalProvider(
-                    LocalAppConfig provides AppConfig(isDebugMode = true),
-                    LocalNavController provides rootNavController,
-                    LocalContext provides context
-                ) {
-
-                    // Provides a coroutine scope for displaying snackbar.
-                    val coroutineScope = rememberCoroutineScope()
-
-                    // Observes global app events from EventManager and reacts accordingly.
-                    LaunchedEffect(Unit) {
-                        SnackBarManager.message_sharedFlow.collect { message ->
-
-                        }
-                    }
-
-
-                    // Observes global app events from EventManager and reacts accordingly.
-                    LaunchedEffect(EventManager) {
-                        lifecycleScope.launch {
-                            // Ensures that event collection only happens while the lifecycle is in the STARTED state.
-                            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                EventManager.eventsFlow.collect { event ->
-                                    when (event) {
-                                        is EventManager.AppEvent.ShowSnackbar -> {
-                                            coroutineScope.launch {
-                                                snackbarHostState.showSnackbar(
-                                                    event.message,
-                                                    duration = SnackbarDuration.Short
-                                                )
-                                            }
-                                        }
-
-
-                                        else -> { //* No-op for unsupported events *//*
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    RootNavigationGraph(rootNavController)
                 }
+
+
             }
         }
     }

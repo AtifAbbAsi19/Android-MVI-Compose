@@ -1,21 +1,12 @@
 package com.mak.androidmvi.core.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.createGraph
-import com.mak.androidmvi.core.sharedViewModel
-import com.mak.androidmvi.ui.core.baseviewmodel.model.BaseData
-import com.mak.androidmvi.ui.core.sharedviewmodel.SharedViewModel
-import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 
 
 /**
@@ -25,8 +16,9 @@ import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
  *
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RootNavigationGraph(navController: NavHostController) {
+fun RootNavigationGraph(navController: NavHostController,scrollBehavior: TopAppBarScrollBehavior?) {
 
   /*  val backStackEntry by navController.currentBackStackEntryAsState()
     val rootEntry = remember(backStackEntry) {
@@ -49,7 +41,7 @@ fun RootNavigationGraph(navController: NavHostController) {
 
         authNavGraph(navController)
 
-        dashboardNavGraph(navController)
+        dashboardNavGraph(navController,scrollBehavior)
 
         userProfileSettingsNavGraph(navController)
 
