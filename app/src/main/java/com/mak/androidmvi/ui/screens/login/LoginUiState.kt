@@ -1,8 +1,10 @@
 package com.mak.androidmvi.ui.screens.login
 
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.res.painterResource
 import com.mak.androidmvi.R
 import com.mak.androidmvi.designsystem.FiledState
+import com.mak.androidmvi.designsystem.PainterHolder
 import com.mak.androidmvi.ui.extensions.isValidEmail
 import com.mak.androidmvi.ui.extensions.isValidPassword
 
@@ -21,6 +23,10 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
 ){
+
+    //val leadingIconPainterHolder = PainterHolder(painter = null)
+    //val trailingIconPainterHolder = PainterHolder(painter = null)
+
     val emailLabel = "Email"
     val emailHint = "user@example.com"
     val passwordLabel = "password"

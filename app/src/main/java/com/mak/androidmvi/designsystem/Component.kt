@@ -33,9 +33,9 @@ sealed class FiledState {
 @Immutable
 data class InputFieldBuilder(
     val filedState: FiledState,
-    val leadingIcon: IconViewBuilder? = null,
+    val leadingIcon: PainterHolder? = null,
     val label: InputFieldBuilder.LabelBuilder?,
-    val trailing: IconViewBuilder? = null,
+    val trailing: PainterHolder? = null,
     val value: String,
     val hint: String? = null,
     val footerMessage: String? = null,
@@ -94,9 +94,9 @@ fun InputField(
 
 @Composable
 fun RowView(
-    leadingIcon: IconViewBuilder? = null,
+    leadingIcon: PainterHolder? = null,
     label: InputFieldBuilder.LabelBuilder?,
-    trailing: IconViewBuilder? = null,
+    trailing: PainterHolder? = null,
 ) {
 
     Row(
@@ -105,7 +105,7 @@ fun RowView(
     ) {
 
         leadingIcon?.let {
-            IconView(leadingIcon)
+            IconView(IconViewBuilder(leadingIcon.painter))
         }
 
         label?.let {
@@ -113,7 +113,7 @@ fun RowView(
         }
 
         trailing?.let {
-            IconView(trailing)
+            IconView(IconViewBuilder(trailing.painter))
         }
 
     }

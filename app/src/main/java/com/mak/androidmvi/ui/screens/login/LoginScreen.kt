@@ -46,6 +46,7 @@ import com.mak.androidmvi.designsystem.FiledState
 import com.mak.androidmvi.designsystem.IconViewBuilder
 import com.mak.androidmvi.designsystem.InputField
 import com.mak.androidmvi.designsystem.InputFieldBuilder
+import com.mak.androidmvi.designsystem.PainterHolder
 
 @Composable
 fun LoginScreen(
@@ -66,13 +67,15 @@ fun LoginScreen(
     // Make column scrollable
     val scrollState = rememberScrollState()
 
-    val emailPainter = painterResource(state.emailLeadingIcon) //to avoid recomposition
+
+   // val emailPainterHolder = PainterHolder(painterResource(state.emailLeadingIcon))
+
+   val emailPainter = painterResource(state.emailLeadingIcon) //to avoid recomposition
 
     // Now wrap the builder itself in remember (not the painterResource call)
     val leadingEmailIcon = remember(state.emailLeadingIcon) {
-        IconViewBuilder(
-            icon = emailPainter,
-            contentDescription = "Email Icon"
+        PainterHolder(
+            painter = emailPainter,
         )
     }
 
@@ -81,9 +84,8 @@ fun LoginScreen(
     }
 
     val trailingEmailIcon = remember(state.emailTrailingIcon) {
-        IconViewBuilder(
-            icon = emailPainter,
-            contentDescription = "Trailing Icon"
+        PainterHolder(
+            painter = emailPainter,
         )
     }
 
