@@ -1,7 +1,6 @@
 package com.mak.androidmvi.ui
 
 import android.util.Patterns
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +29,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SignupScreen(onBack: () -> Unit) {
+fun SignupScreen(
+    onBack: () -> Unit,
+    onGoToOtp: () -> Unit,
+    successId: String?
+) {
 
     // Make column scrollable
     val scrollState = rememberScrollState()
@@ -138,7 +141,7 @@ fun SignupScreen(onBack: () -> Unit) {
                 confirmPasswordError = password != confirmPassword
 
                 if (!emailError && !passwordError && !confirmPasswordError) {
-                    //onSignUp(email, password)
+                    onGoToOtp.invoke()
                 }
             },
             modifier = Modifier.fillMaxWidth(),

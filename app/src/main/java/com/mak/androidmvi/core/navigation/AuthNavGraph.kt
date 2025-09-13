@@ -1,5 +1,6 @@
 package com.mak.androidmvi.core.navigation
 
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -25,9 +26,22 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
             )
         }
 
-        composable<Destination.Auth.Signup> {
-            SignupScreen(onBack = { navController.popBackStack() })
+
+        composable<Destination.Auth.Signup> { backStackEntry ->
+            val result = backStackEntry
+                .savedStateHandle
+                .getStateFlow<String?>("otp_result", null)
+                .collectAsState()
+
+            SignupScreen(
+                successId = result.value,
+                onBack = { navController.popBackStack() },
+                onGoToOtp = {
+                    navController.navigate(Destination.OTP.Root)
+                }
+            )
         }
+
 
         composable<Destination.Auth.ForgotPassword> { entry ->
             val args = entry.toRoute<Destination.Auth.ForgotPassword>()

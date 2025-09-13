@@ -60,4 +60,11 @@ sealed interface Destination {
         @Serializable data object UpdateEmail : ProfileSettings
         @Serializable data object UpdatePhoneNumber : ProfileSettings
     }
+
+    // -------- OTP SubGraph --------
+    sealed interface OTP : Destination {
+        @Serializable data object Root : Destination
+        @Serializable data object ValidateOtp : Destination
+    }
+
 }

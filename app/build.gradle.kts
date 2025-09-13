@@ -52,6 +52,9 @@ dependencies {
     //implementation(libs.androidx.material3.icons.core)
    // implementation(libs.androidx.material3.icons.extended)
 
+    //add("new-App1Implementation", "com.app1:lib:1.2.3")
+    //add("oldAppImplementation", "com.app2:lib:1.2.3")
+
     implementation(libs.core.splashscreen)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)

@@ -49,6 +49,8 @@ fun RootNavigationGraph(navController: NavHostController) {
 
         authNavGraph(navController)
 
+        OtpNavGraph(navController)
+
         dashboardNavGraph(navController)
 
         userProfileSettingsNavGraph(navController)
