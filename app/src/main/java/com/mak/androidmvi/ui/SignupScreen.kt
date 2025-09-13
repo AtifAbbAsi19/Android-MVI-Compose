@@ -1,5 +1,6 @@
 package com.mak.androidmvi.ui
 
+import android.text.TextUtils
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +34,7 @@ import androidx.compose.ui.unit.dp
 fun SignupScreen(
     onBack: () -> Unit,
     onGoToOtp: () -> Unit,
+    onConfirmationScreen: () -> Unit,
     successId: String?
 ) {
 
@@ -47,6 +50,14 @@ fun SignupScreen(
     var passwordError by remember { mutableStateOf(false) }
     var confirmPasswordError by remember { mutableStateOf(false) }
 
+
+    if(!TextUtils.isEmpty(successId)) {
+        // Handle effects
+        LaunchedEffect(successId) {
+
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,6 +67,12 @@ fun SignupScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
+        successId?.let {
+            Text("Success ID: $it")
+        }
+
         Text(
             text = "Sign Up",
             style = MaterialTheme.typography.headlineMedium,

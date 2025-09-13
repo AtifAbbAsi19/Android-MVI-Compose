@@ -38,6 +38,9 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
                 onBack = { navController.popBackStack() },
                 onGoToOtp = {
                     navController.navigate(Destination.OTP.Root)
+                },
+                onConfirmationScreen = {
+
                 }
             )
         }
