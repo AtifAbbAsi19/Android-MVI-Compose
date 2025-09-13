@@ -54,7 +54,7 @@ fun SignupScreen(
     if(!TextUtils.isEmpty(successId)) {
         // Handle effects
         LaunchedEffect(successId) {
-
+            onConfirmationScreen.invoke()
         }
     }
 

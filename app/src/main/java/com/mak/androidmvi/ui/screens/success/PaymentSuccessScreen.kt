@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 /**
  * A polished, reusable success page for Compose (Material3).
@@ -44,7 +42,7 @@ import androidx.compose.ui.unit.sp
  * - Accessible (semantics, test tags)
  */
 @Composable
-fun SuccessScreen(
+fun PaymentSuccessScreen(
     modifier: Modifier = Modifier,
     title: String = "Success!",
     message: String = "Your action completed successfully.",
@@ -267,7 +265,7 @@ private fun ConfettiBurst(modifier: Modifier = Modifier) {
 @Composable
 private fun SuccessScreenPreviewLight() {
     MaterialTheme(colorScheme = lightColorScheme()) {
-        SuccessScreen(
+        PaymentSuccessScreen(
             title = "Payment received",
             message = "We emailed your receipt. You can now explore premium features.",
             primaryActionLabel = "Go to Dashboard",
@@ -282,7 +280,7 @@ private fun SuccessScreenPreviewLight() {
 @Composable
 private fun SuccessScreenPreviewDark() {
     MaterialTheme(colorScheme = darkColorScheme()) {
-        SuccessScreen(
+        PaymentSuccessScreen(
             title = "Profile updated",
             message = "Your changes have been saved.",
             primaryActionLabel = "Done",

@@ -1,12 +1,7 @@
 package com.mak.androidmvi.core.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -21,7 +16,7 @@ import com.mak.androidmvi.ui.SettingsScreen
 import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.core.BottomNavigationBar
 import com.mak.androidmvi.ui.screens.home.HomeTopAppBar
-import com.mak.androidmvi.ui.screens.success.SuccessScreen
+import com.mak.androidmvi.ui.screens.success.PaymentSuccessScreen
 import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,7 +80,7 @@ fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
 
 
             composable<Destination.Success> {
-                AppScaffold(navController, showBottomBar = false) { padding, _ -> SuccessScreen(
+                AppScaffold(navController, showBottomBar = false) { padding, _ -> PaymentSuccessScreen(
                 ) }
             }
 

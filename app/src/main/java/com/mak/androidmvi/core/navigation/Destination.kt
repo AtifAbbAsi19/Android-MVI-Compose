@@ -2,6 +2,7 @@ package com.mak.androidmvi.core.navigation
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
+import com.mak.androidmvi.core.navigation.Destination.Auth.Signup
 import kotlinx.serialization.Serializable
 
 
@@ -41,6 +42,14 @@ sealed interface Destination {
         @Serializable data object Signup : Auth
         @Serializable data class ForgotPassword(val email: String? = null) : Auth
     }
+
+
+    // -------- Auth sub-Graph --------
+    sealed interface SignupGraph : Auth {
+        @Serializable data object Signup : SignupGraph
+        @Serializable data class Success(val email: String? = null, val successId : String?= null) : SignupGraph
+    }
+
 
     // -------- Dashboard Graph --------
     sealed interface Dashboard : Destination {
