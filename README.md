@@ -38,6 +38,13 @@
  │ (Composable)│
  └─────────────┘
 
+```mermaid
+flowchart TD
+    U[User] -->|Intent (Click, Input, Scroll)| VM[ViewModel<br/>(Reducer)]
+    VM -->|Emits new State| M[Model<br/>(UiState)]
+    M --> V[View<br/>(Composable)]
+    V -->|User interacts again| U
+
 
 * Unidirectional flow → makes UI predictable and testable.
 * State is single source of truth.
