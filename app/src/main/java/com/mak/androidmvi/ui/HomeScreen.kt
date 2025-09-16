@@ -26,6 +26,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,19 +40,48 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.mak.androidmvi.R
+import com.mak.androidmvi.data.User
+import kotlinx.collections.immutable.persistentListOf
+import java.util.UUID
+import kotlin.uuid.toKotlinUuid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, viewModel: ViewModel) {
 
-    val items = listOf(
+
+    /*  val items = listOf(
+      Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 1"),
+      Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 2"),
+      Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 3"),
+      Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 4"),
+      Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 5"),
+      Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 6"),
+  )*/
+
+
+    val items = remember { persistentListOf(
         Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 1"),
         Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 2"),
         Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 3"),
         Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 4"),
         Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 5"),
         Pair(R.drawable.sharp_delivery_truck_speed_24, "Category 6"),
-    )
+    ) }
+
+
+
+    val usersList = remember { persistentListOf(
+        User(id = UUID.randomUUID().toString(), name = "{name}", isActive = true),
+        User(id = UUID.randomUUID().toString(), name = "{name}", isActive = false),
+
+    )}
+
+    val filteredList by remember {
+        derivedStateOf { usersList.filter { it.isActive } }
+    }
+
+
 
 
     LazyColumn(
@@ -132,7 +164,11 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
             )
         }
 
-        items(20) { index ->
+        items(20,
+            key = { index -> index },
+           // key = { item -> item.hashCode() }   // or item.id if you have stable IDs
+            //key = { item -> item.id }
+        ) { index ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
