@@ -15,6 +15,7 @@
 * **Intent (Events):** User actions that mutate state through the ViewModel.
 
 **Flow Diagram**
+```text
  ┌───────────┐
  │   User    │
  └─────┬─────┘
@@ -36,6 +37,7 @@
  │    View     │
  │ (Composable)│
  └─────────────┘
+
 
 * Unidirectional flow → makes UI predictable and testable.
 * State is single source of truth.
