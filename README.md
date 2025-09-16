@@ -103,3 +103,16 @@ fun Counter() {
 #### Use cases:
 - Long-lived effects (LaunchedEffect, SideEffect) needing the latest callback.
 - Prevents stale closures when lambdas change over time.
+
+
+## `PersistentListOf`
+### 🔹 When to use
+#### Use cases:
+- when you "modify" it, you actually get a new copy that reuses most of the old structure under the hood. Efficient and immutable
+
+🔹 It provides immutable & persistent collections:
+- `persistentListOf()`
+- `persistentSetOf()`
+- `persistentMapOf()`
+- `toPersistentList(), toPersistentSet(), etc.`
+
