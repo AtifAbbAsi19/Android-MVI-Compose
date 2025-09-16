@@ -79,7 +79,7 @@ fun Counter() {
         Text("Count = ${count.value}")
     }
 }
-
+```
 
 ## 2. `rememberSaveable`
 
