@@ -38,23 +38,53 @@
  │ (Composable)│
  └─────────────┘
 
-```mermaid
+```
 flowchart TD
     U[User] -->|Intent (Click, Input, Scroll)| VM[ViewModel<br/>(Reducer)]
     VM -->|Emits new State| M[Model<br/>(UiState)]
     M --> V[View<br/>(Composable)]
     V -->|User interacts again| U
 
-
 * Unidirectional flow → makes UI predictable and testable.
 * State is single source of truth.
 * Events don’t directly mutate UI, only the ViewModel does.
 
 **Diagram of MVI in Compose**
-
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/7f178888-3368-4e1e-beb0-380ba7d0633d" />
 
-
-**🧠 State Management in Jetpack Compose: remember, rememberSaveable, rememberUpdatedState **
-
+**State Management in Jetpack Compose: remember, rememberSaveable, rememberUpdatedState**
 In Jetpack Compose, state drives UI. Choosing the right state holder is crucial for correctness, avoiding unnecessary recompositions, and ensuring UI behaves as expected across configuration changes.
+
+# 🧠 State Management in Jetpack Compose
+
+Jetpack Compose manages UI with **state**. Choosing the right state holder is important for correctness, performance, and user experience.  
+
+This guide explains **when to use**:  
+- `remember`  
+- `rememberSaveable`  
+- `rememberUpdatedState`
+
+---
+
+## 1. `remember`
+
+### 🔹 What it does
+- Stores a value in the current **composition**.  
+- Survives **recompositions**.  
+- **Does not survive** configuration changes (rotation, dark mode) or process death.  
+
+### 🔹 When to use
+- For **temporary UI state** that only matters while the Composable is in memory.  
+- Example: expand/collapse state, animation progress, toggle states.
+
+### 🔹 Example
+```kotlin
+@Composable
+fun Counter() {
+    val count = remember { mutableStateOf(0) }
+
+    Button(onClick = { count.value++ }) {
+        Text("Count = ${count.value}")
+    }
+}
+
