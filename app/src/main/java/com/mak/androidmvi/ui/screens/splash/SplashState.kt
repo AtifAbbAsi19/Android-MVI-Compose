@@ -8,5 +8,6 @@ import com.mak.androidmvi.R
 @Immutable
 data class SplashState(
     val isLoading: Boolean = true,
-    val logo : Int =  R.drawable.splash_logo
+    val logo : Int =  R.drawable.splash_logo,
+    val version : String = "Version 1.0"
 )

@@ -56,12 +56,12 @@ fun SplashScreen(onFinished: () -> Unit) {
             contentDescription = "splash_logo"
         )
 
-       if (uiState.isLoading) {
-            CircularProgressIndicator()
-        }
+      // if (uiState.isLoading) {
+        //    CircularProgressIndicator()
+        //}
 
         Text(
-            text = "Version 1.0",
+            text = uiState.version,
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp)
         )
 
