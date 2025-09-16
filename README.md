@@ -80,3 +80,26 @@ fun Counter() {
     }
 }
 
+
+## 2. `rememberSaveable`
+
+### 🔹 What it does
+- Stores a value in the current **composition**.  
+- Survives **recompositions**.  
+- **Survive** configuration changes (rotation, dark mode).  
+
+### 🔹 When to use
+####Use cases:
+- Input fields (TextField), scroll positions, selections.
+- Any UI state that must survive rotation or process recreation.
+
+## 3. `rememberUpdatedState`
+
+### 🔹 What it does
+-Keeps a stable reference to a changing value for effects or lambdas that may outlive recompositions..  
+
+
+### 🔹 When to use
+####Use cases:
+- Long-lived effects (LaunchedEffect, SideEffect) needing the latest callback.
+- Prevents stale closures when lambdas change over time.
