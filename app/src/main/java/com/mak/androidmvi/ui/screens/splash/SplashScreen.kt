@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,10 +27,13 @@ fun SplashScreen(onFinished: () -> Unit) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+
+    val onFinishedState by rememberUpdatedState(onFinished)
+
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                SplashViewModel.SplashEffect.NavigateToAuth -> onFinished()
+                SplashViewModel.SplashEffect.NavigateToAuth -> onFinishedState()
             }
         }
     }
@@ -38,7 +42,7 @@ fun SplashScreen(onFinished: () -> Unit) {
     // Start a coroutine when this composable enters the composition
     LaunchedEffect(Unit) {
         delay(3000) // 3 seconds
-        onFinished() // Navigate to next screen
+        onFinishedState() // Navigate to next screen
     }
 
     // Your UI for Splash
@@ -48,13 +52,13 @@ fun SplashScreen(onFinished: () -> Unit) {
     ) {
 
         Image(
-            painter = R.drawable.splash_logo.asPainter(),
+            painter = uiState.logo.asPainter(),
             contentDescription = "splash_logo"
         )
 
-       /* if (uiState.isLoading) {
+       if (uiState.isLoading) {
             CircularProgressIndicator()
-        }*/
+        }
 
         Text(
             text = "Version 1.0",
