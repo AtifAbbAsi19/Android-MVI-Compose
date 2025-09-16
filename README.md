@@ -116,3 +116,16 @@ fun Counter() {
 - `persistentMapOf()`
 - `toPersistentList(), toPersistentSet(), etc.`
 
+### 🔹 Example
+```kotlin
+
+val myList = persistentListOf("A", "B", "C")
+
+val newList = myList.add("D")  // returns a new list, original unchanged
+println(myList)   // [A, B, C]
+println(newList)  // [A, B, C, D]
+
+// Convert from normal list
+val normal = listOf("X", "Y")
+val persistent = normal.toPersistentList()
+
