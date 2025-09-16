@@ -53,3 +53,8 @@ flowchart TD
 **Diagram of MVI in Compose**
 
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/7f178888-3368-4e1e-beb0-380ba7d0633d" />
+
+
+**🧠 State Management in Jetpack Compose: remember, rememberSaveable, rememberUpdatedState **
+
+In Jetpack Compose, state drives UI. Choosing the right state holder is crucial for correctness, avoiding unnecessary recompositions, and ensuring UI behaves as expected across configuration changes.
