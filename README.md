@@ -89,7 +89,7 @@ fun Counter() {
 - **Survive** configuration changes (rotation, dark mode).  
 
 ### 🔹 When to use
-####Use cases:
+#### Use cases:
 - Input fields (TextField), scroll positions, selections.
 - Any UI state that must survive rotation or process recreation.
 
@@ -100,6 +100,6 @@ fun Counter() {
 
 
 ### 🔹 When to use
-####Use cases:
+#### Use cases:
 - Long-lived effects (LaunchedEffect, SideEffect) needing the latest callback.
 - Prevents stale closures when lambdas change over time.
