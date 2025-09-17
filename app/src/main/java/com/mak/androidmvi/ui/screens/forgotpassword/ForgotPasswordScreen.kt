@@ -39,6 +39,7 @@ fun ForgotPasswordScreen(
 
 
     val sharedViewModel by sharedAuthViewModel.uiState.collectAsStateWithLifecycle()
+    val hasLaunched = remember { mutableStateOf(false) }
 
 
     // Handle system back press
@@ -61,11 +62,12 @@ fun ForgotPasswordScreen(
 
 
     LaunchedEffect(Unit) {
-        Log.d("appLog1",sharedViewModel.pageInfo)
+        if (!hasLaunched.value) {
+            Log.d("appLog1", sharedViewModel.pageInfo)
 
-        sharedAuthViewModel.updatePage("loginPage")
+            sharedAuthViewModel.updatePage("loginPage")
+        }
     }
-
 
     Log.d("appLog2",sharedViewModel.pageInfo)
 

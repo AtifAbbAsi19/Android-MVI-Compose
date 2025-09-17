@@ -55,6 +55,8 @@ fun SignupScreen(
     var passwordError by remember { mutableStateOf(false) }
     var confirmPasswordError by remember { mutableStateOf(false) }
 
+    val hasLaunched = remember { mutableStateOf(false) }
+
 
     if(!TextUtils.isEmpty(successId)) {
         // Handle effects
@@ -66,11 +68,12 @@ fun SignupScreen(
     }
 
     LaunchedEffect(key1 = Unit) {
-        Log.d("appLog1",state.pageInfo)
+        if (!hasLaunched.value) {
+        Log.d("appLog",state.pageInfo)
         sharedAuthViewModel.updatePage("signuppage")
     }
+    }
 
-    Log.d("appLog2",state.pageInfo)
 
     Column(
         modifier = Modifier
