@@ -18,6 +18,8 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
     navigation<Destination.Auth.Root>(startDestination = Destination.Auth.Login) {
         composable<Destination.Auth.Login> { backStackEntry->
 
+
+
             //  Scope the SharedAuthViewModel to the Auth.Root graph
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Destination.Auth.Root)

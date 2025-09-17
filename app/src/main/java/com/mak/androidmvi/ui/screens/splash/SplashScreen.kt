@@ -1,11 +1,9 @@
 package com.mak.androidmvi.ui.screens.splash
 
-import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,12 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mak.androidmvi.R
 import com.mak.androidmvi.core.asPainter
+import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(onFinished: () -> Unit) {
+fun SplashScreen(onFinished: () -> Unit, appSharedViewModel: AppSharedViewModel) {
 
     val viewModel: SplashViewModel = viewModel()
 
