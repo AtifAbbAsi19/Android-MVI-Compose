@@ -30,7 +30,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -43,13 +42,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.asPainter
 import com.mak.androidmvi.designsystem.FiledState
-import com.mak.androidmvi.designsystem.IconViewBuilder
 import com.mak.androidmvi.designsystem.InputField
 import com.mak.androidmvi.designsystem.InputFieldBuilder
 import com.mak.androidmvi.designsystem.PainterHolder
+import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 @Composable
 fun LoginScreen(
+    sharedAuthViewModel: SharedAuthViewModel = viewModel(),
     viewModel: LoginViewModel = viewModel(),
     onLoginSuccess: () -> Unit,
     onSignup: () -> Unit,
@@ -106,7 +106,12 @@ fun LoginScreen(
             is Unit->{
                // emailFocusRequester.requestFocus()
             }
-            null -> {}
+            Unit -> {
+                sharedAuthViewModel.updatePage("loginPage")
+            }
+            null -> {
+                sharedAuthViewModel.updatePage("loginPage")
+            }
         }
     }
 

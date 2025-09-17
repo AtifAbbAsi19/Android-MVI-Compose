@@ -16,6 +16,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,9 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 @Composable
-fun ForgotPasswordScreen(onBack: () -> Unit, email: String?) {
+fun ForgotPasswordScreen(
+    onBack: () -> Unit,
+    email: String?,
+    sharedAuthViewModel: SharedAuthViewModel
+) {
 
 
     // Handle system back press
@@ -47,6 +53,12 @@ fun ForgotPasswordScreen(onBack: () -> Unit, email: String?) {
 
     var email by remember { mutableStateOf(if(email.isNullOrBlank()){""}else email) }
     var emailError by remember { mutableStateOf(false) }
+
+
+    LaunchedEffect(Unit) {
+        sharedAuthViewModel.updatePage("loginPage")
+    }
+
 
     Column(
         modifier = Modifier

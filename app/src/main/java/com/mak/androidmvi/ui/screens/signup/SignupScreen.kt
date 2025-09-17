@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,18 +30,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 @Composable
 fun SignupScreen(
     onBack: () -> Unit,
     onGoToOtp: () -> Unit,
     onConfirmationScreen: () -> Unit,
-    successId: String?
+    successId: String?,
+    sharedAuthViewModel: SharedAuthViewModel
 ) {
 
     // Make column scrollable
     val scrollState = rememberScrollState()
 
+    val state by sharedAuthViewModel.uiState.collectAsState()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -58,6 +62,11 @@ fun SignupScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        sharedAuthViewModel.updatePage("successPage")
+    }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -74,10 +83,18 @@ fun SignupScreen(
         }
 
         Text(
+            text = state.pageInfo,
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+
+        Text(
             text = "Sign Up",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
+
 
         OutlinedTextField(
             value = email,

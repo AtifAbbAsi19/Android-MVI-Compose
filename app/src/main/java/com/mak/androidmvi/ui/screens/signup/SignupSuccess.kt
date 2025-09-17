@@ -11,10 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 
 @Composable
-fun SignupSuccess(successId: String, onLogin: () -> Unit) {
+fun SignupSuccess(successId: String, onLogin: () -> Unit, sharedAuthViewModel: SharedAuthViewModel) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
