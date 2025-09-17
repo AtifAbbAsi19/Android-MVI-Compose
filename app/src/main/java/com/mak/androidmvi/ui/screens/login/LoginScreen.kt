@@ -1,5 +1,6 @@
 package com.mak.androidmvi.ui.screens.login
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -67,6 +68,8 @@ fun LoginScreen(
     // Make column scrollable
     val scrollState = rememberScrollState()
 
+    val sharedViewModel by sharedAuthViewModel.uiState.collectAsStateWithLifecycle()
+
 
    // val emailPainterHolder = PainterHolder(painterResource(state.emailLeadingIcon))
 
@@ -107,6 +110,8 @@ fun LoginScreen(
                // emailFocusRequester.requestFocus()
             }
             Unit -> {
+                Log.d("appLog1",sharedViewModel.pageInfo)
+
                 sharedAuthViewModel.updatePage("loginPage")
             }
             null -> {
@@ -118,6 +123,8 @@ fun LoginScreen(
     var emailFocused by rememberSaveable { mutableStateOf(false) }
     var passwordFocused by rememberSaveable { mutableStateOf(false) }
     var reConfirmPasswordFocused by rememberSaveable { mutableStateOf(false) }
+
+    Log.d("appLog2",sharedViewModel.pageInfo)
 
 
     // Your UI for Login

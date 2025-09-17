@@ -1,5 +1,6 @@
 package com.mak.androidmvi.ui.screens.forgotpassword
 
+import android.util.Log
 import android.util.Patterns
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 @Composable
@@ -34,6 +36,9 @@ fun ForgotPasswordScreen(
     email: String?,
     sharedAuthViewModel: SharedAuthViewModel
 ) {
+
+
+    val sharedViewModel by sharedAuthViewModel.uiState.collectAsStateWithLifecycle()
 
 
     // Handle system back press
@@ -56,8 +61,13 @@ fun ForgotPasswordScreen(
 
 
     LaunchedEffect(Unit) {
+        Log.d("appLog1",sharedViewModel.pageInfo)
+
         sharedAuthViewModel.updatePage("loginPage")
     }
+
+
+    Log.d("appLog2",sharedViewModel.pageInfo)
 
 
     Column(

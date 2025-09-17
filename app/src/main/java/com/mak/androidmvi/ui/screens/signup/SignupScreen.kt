@@ -1,6 +1,7 @@
 package com.mak.androidmvi.ui.screens.signup
 
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -58,14 +59,18 @@ fun SignupScreen(
     if(!TextUtils.isEmpty(successId)) {
         // Handle effects
         LaunchedEffect(successId) {
+            Log.d("appLogsuccess",state.pageInfo)
+
             onConfirmationScreen.invoke()
         }
     }
 
     LaunchedEffect(Unit) {
+        Log.d("appLog1",state.pageInfo)
         sharedAuthViewModel.updatePage("successPage")
     }
 
+    Log.d("appLog2",state.pageInfo)
 
     Column(
         modifier = Modifier
