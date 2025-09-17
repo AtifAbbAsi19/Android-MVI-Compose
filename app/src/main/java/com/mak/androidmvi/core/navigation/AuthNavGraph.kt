@@ -10,6 +10,7 @@ import androidx.navigation.toRoute
 import com.mak.androidmvi.ui.screens.forgotpassword.ForgotPasswordScreen
 import com.mak.androidmvi.ui.screens.login.LoginScreen
 import com.mak.androidmvi.ui.screens.login.LoginViewModel
+import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController){
@@ -18,6 +19,12 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
     navigation<Destination.Auth.Root>(startDestination = Destination.Auth.Login) {
         composable<Destination.Auth.Login> { backStackEntry->
 
+            //  Scope the SharedAuthViewModel to the Auth.Root graph
+            val appEntry = remember(backStackEntry) {
+                navController.getBackStackEntry(Destination.Root)
+            }
+
+            val appSharedViewModel: AppSharedViewModel =   viewModel(appEntry)   //hiltViewModel(parentEntry)
 
 
             //  Scope the SharedAuthViewModel to the Auth.Root graph
