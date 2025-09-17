@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.setting
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

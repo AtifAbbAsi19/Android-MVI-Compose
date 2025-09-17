@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun UpdatePhoneScreen(onBack: () -> Boolean) {
+fun SearchScreen() {
 
 
     Column {
@@ -16,7 +16,7 @@ fun UpdatePhoneScreen(onBack: () -> Boolean) {
             modifier = Modifier.clickable{
 
             },
-            text = "Update Phone",
+            text = "Search Screen",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )

@@ -1,15 +1,12 @@
 package com.mak.androidmvi.core.navigation
 
-import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.mak.androidmvi.ui.ForgotPasswordScreen
+import com.mak.androidmvi.ui.screens.forgotpassword.ForgotPasswordScreen
 import com.mak.androidmvi.ui.screens.login.LoginScreen
-import com.mak.androidmvi.ui.SignupScreen
-import com.mak.androidmvi.ui.SignupSuccess
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController){
 

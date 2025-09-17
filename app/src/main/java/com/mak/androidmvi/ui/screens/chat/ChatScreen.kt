@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.chat
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SearchScreen() {
+fun ChatScreen() {
 
 
     Column {
@@ -16,7 +16,7 @@ fun SearchScreen() {
             modifier = Modifier.clickable{
 
             },
-            text = "Search Screen",
+            text = "Chat Screen",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )

@@ -1,15 +1,12 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,7 +40,6 @@ import com.mak.androidmvi.R
 import com.mak.androidmvi.data.User
 import kotlinx.collections.immutable.persistentListOf
 import java.util.UUID
-import kotlin.uuid.toKotlinUuid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

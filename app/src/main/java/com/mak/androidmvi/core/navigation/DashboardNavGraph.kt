@@ -8,11 +8,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.sharedViewModel
-import com.mak.androidmvi.ui.ChatScreen
-import com.mak.androidmvi.ui.HomeScreen
-import com.mak.androidmvi.ui.ProfileScreen
-import com.mak.androidmvi.ui.SearchScreen
-import com.mak.androidmvi.ui.SettingsScreen
+import com.mak.androidmvi.ui.screens.chat.ChatScreen
+import com.mak.androidmvi.ui.screens.home.HomeScreen
+import com.mak.androidmvi.ui.screens.profile.ProfileScreen
+import com.mak.androidmvi.ui.screens.search.SearchScreen
+import com.mak.androidmvi.ui.screens.setting.SettingsScreen
 import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.core.BottomNavigationBar
 import com.mak.androidmvi.ui.screens.home.HomeTopAppBar

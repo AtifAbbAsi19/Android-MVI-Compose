@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.signup
 
 import android.text.TextUtils
 import android.util.Patterns

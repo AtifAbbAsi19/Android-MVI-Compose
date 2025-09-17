@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.signup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.mak.androidmvi.ui.SignupScreen
-import com.mak.androidmvi.ui.SignupSuccess
+import com.mak.androidmvi.ui.screens.signup.SignupScreen
+import com.mak.androidmvi.ui.screens.signup.SignupSuccess
 import com.mak.androidmvi.ui.extensions.safeEmpty
 
 

@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.update
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ChatScreen() {
+fun UploadPhotoScreen(onBack: () -> Boolean) {
 
 
     Column {
@@ -16,7 +16,7 @@ fun ChatScreen() {
             modifier = Modifier.clickable{
 
             },
-            text = "Chat Screen",
+            text = "Upload Photo",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )

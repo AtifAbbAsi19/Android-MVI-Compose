@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.forgotpassword
 
 import android.util.Patterns
 import androidx.activity.compose.BackHandler

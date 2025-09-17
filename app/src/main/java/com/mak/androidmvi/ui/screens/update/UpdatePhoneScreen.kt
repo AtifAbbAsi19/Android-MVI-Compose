@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui
+package com.mak.androidmvi.ui.screens.update
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -8,8 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun UpdateEmailScreen(onBack: () -> Boolean) {
-
+fun UpdatePhoneScreen(onBack: () -> Boolean) {
 
 
     Column {
@@ -17,7 +16,7 @@ fun UpdateEmailScreen(onBack: () -> Boolean) {
             modifier = Modifier.clickable{
 
             },
-            text = "Update Email",
+            text = "Update Phone",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )
