@@ -65,9 +65,9 @@ fun SignupScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = Unit) {
         Log.d("appLog1",state.pageInfo)
-        sharedAuthViewModel.updatePage("successPage")
+        sharedAuthViewModel.updatePage("signuppage")
     }
 
     Log.d("appLog2",state.pageInfo)
