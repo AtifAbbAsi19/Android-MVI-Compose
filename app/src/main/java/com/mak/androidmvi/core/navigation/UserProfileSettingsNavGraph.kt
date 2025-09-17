@@ -14,9 +14,9 @@ fun NavGraphBuilder.userProfileSettingsNavGraph(navController: NavHostController
 
         composable<Destination.ProfileSettings.UpdateEmail> { UpdateEmailScreen(onBack = { navController.popBackStack() }) }
 
-          composable<Destination.ProfileSettings.UploadPhoto> { UploadPhotoScreen(onBack = { navController.popBackStack() }) }
+        composable<Destination.ProfileSettings.UploadPhoto> { UploadPhotoScreen(onBack = { navController.popBackStack() }) }
 
-          composable<Destination.ProfileSettings.UpdatePhoneNumber> { UpdatePhoneScreen(onBack = { navController.popBackStack() }) }
+        composable<Destination.ProfileSettings.UpdatePhoneNumber> { UpdatePhoneScreen(onBack = { navController.popBackStack() }) }
     }
 
 }

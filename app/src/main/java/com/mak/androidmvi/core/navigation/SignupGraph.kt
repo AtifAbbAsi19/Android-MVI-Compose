@@ -8,6 +8,7 @@ import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.mak.androidmvi.ui.SignupScreen
 import com.mak.androidmvi.ui.SignupSuccess
+import com.mak.androidmvi.ui.extensions.safeEmpty
 
 
 fun NavGraphBuilder.signupGraph(navController: NavHostController){
@@ -46,8 +47,4 @@ fun NavGraphBuilder.signupGraph(navController: NavHostController){
         }
 
     }
-}
-
-private fun String?.safeEmpty(): String {
-    return ""
 }
