@@ -3,6 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+
+ /*   id("com.android.application")
+    kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
+    // if using serialization plugin for Kotlin compiler
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.20" // match Kotlin toolchain*/
 }
 
 android {
@@ -64,6 +71,33 @@ dependencies {
 
     //implementation(libs.androidx.navigation3.runtime)
     //implementation(libs.androidx.navigation3.ui)
+/*
+
+    // Kotlin / Coroutines / Serialization
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json.v180)
+
+    // Ktor client
+    implementation("io.ktor:ktor-client-core:3.3.0")
+    implementation("io.ktor:ktor-client-okhttp:3.3.0")       // Android engine
+    implementation("io.ktor:ktor-client-content-negotiation:3.3.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.0")
+    implementation("io.ktor:ktor-client-logging:3.3.0")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.57.1")
+    kapt("com.google.dagger:hilt-compiler:2.57.1")
+
+    // AndroidX, Lifecycle & ViewModel
+    implementation(libs.androidx.lifecycle.runtime.ktx.v261)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // Jetpack Compose (optional)
+    // use compose BOM or explicit versions if using Compose
+
+    // Testing
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation("io.ktor:ktor-client-mock:3.3.0")*/
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

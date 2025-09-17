@@ -19,13 +19,13 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
     navigation<Destination.Auth.Root>(startDestination = Destination.Auth.Login) {
         composable<Destination.Auth.Login> { backStackEntry->
 
-            //  Scope the SharedAuthViewModel to the Auth.Root graph
+        /*    //  Scope the SharedAuthViewModel to the Auth.Root graph
             val appEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Destination.Root)
             }
 
             val appSharedViewModel: AppSharedViewModel =   viewModel(appEntry)   //hiltViewModel(parentEntry)
-
+*/
 
             //  Scope the SharedAuthViewModel to the Auth.Root graph
             val parentEntry = remember(backStackEntry) {
