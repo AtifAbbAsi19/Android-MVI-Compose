@@ -99,7 +99,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
     ) {
 
         // 1️⃣ Grid section
-        item {
+        item( key = 0 ) {
             Text(
                 text = "Categories",
                 modifier = Modifier.padding(16.dp),
@@ -117,7 +117,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
                 userScrollEnabled = false // disable nested scroll
             ) {
 
-                items(items.size) { index ->
+                items( count = items.size, key = { index -> index },) { index ->
                     val (imageRes, title) = items[index]
 
                     Card(
@@ -154,7 +154,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
         }
 
         // 2️⃣ Lazy list section
-        item {
+        item( key = 1 ) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Recent Items",
@@ -164,6 +164,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
             )
         }
 
+        //3rd
         items(20,
             key = { index -> index },
            // key = { item -> item.hashCode() }   // or item.id if you have stable IDs
