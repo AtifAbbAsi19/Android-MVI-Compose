@@ -95,7 +95,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
     ) {
 
         // 1️⃣ Grid section
-        item( key = 0 ) {
+        item( key = "0") {
             Text(
                 text = "Categories",
                 modifier = Modifier.padding(16.dp),
@@ -150,7 +150,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
         }
 
         // 2️⃣ Lazy list section
-        item( key = 1 ) {
+        item( key = "1" ) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Recent Items",

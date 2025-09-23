@@ -32,12 +32,12 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
                 navController.getBackStackEntry(Destination.Auth.Root)
             }
 
-            val sharedAuthViewModel: SharedAuthViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
+           // val sharedAuthViewModel: SharedAuthViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
 
             val loginViewModel: LoginViewModel = viewModel(parentEntry)
 
             LoginScreen(
-                sharedAuthViewModel = sharedAuthViewModel,
+                //sharedAuthViewModel = sharedAuthViewModel,
                 viewModel = loginViewModel,
                 onLoginSuccess = {
                     navController.navigate(Destination.Dashboard.Root) {
