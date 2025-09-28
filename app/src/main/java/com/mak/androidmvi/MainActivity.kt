@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -137,7 +138,10 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    RootNavigationGraph(rootNavController)
+                    Surface {
+                        RootNavigationGraph()
+                    }
+
                 }
             }
         }
@@ -145,6 +149,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
+/*
 @Composable
 fun ExpandableText(
     text: String,
@@ -178,6 +183,7 @@ fun ExpandableText(
     }
 }
 
+*/
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
