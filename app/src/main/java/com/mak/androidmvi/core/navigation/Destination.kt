@@ -33,6 +33,16 @@ sealed interface Destination {
 
     @Serializable data object Splash : Destination
 
+
+
+
+    // -------- Notification sub-Graph --------
+    sealed interface NotificationGraph : Auth {
+        @Serializable data object Root : SignupGraph
+        @Serializable data object List : SignupGraph
+        @Serializable data object ListDetail : SignupGraph
+    }
+
     @Serializable data object Success : Destination
 
     // -------- Auth Graph --------

@@ -183,7 +183,11 @@ fun RootNavigationGraph(rootViewModel: RootViewModel = viewModel()) {
            // popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) }
         ) {
 
+
+
             splashNavGraph(rootNavController , rootViewModel)
+
+            notificationNavGraph(rootNavController , rootViewModel)
 
             authNavGraph(rootNavController, rootViewModel)
 
