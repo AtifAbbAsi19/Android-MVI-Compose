@@ -69,7 +69,7 @@ fun AppScaffold(
             when (event) {
                 is UiEvent.ShowSnackbar -> {
                     scope.launch {
-                        snackbarHostState.showSnackbar(event.message, event.action)
+                        snackbarHostState.showSnackbar(event.message, event.actionLabel)
                     }
                 }
                 is UiEvent.ShowToast -> {
@@ -95,6 +95,13 @@ fun AppScaffold(
                 }
                 UiEvent.DismissBottomSheet -> {
                     bottomSheetContent = null
+                }
+
+                UiEvent.DismissDialog -> {
+
+                }
+                is UiEvent.Navigate -> {
+
                 }
             }
         }
