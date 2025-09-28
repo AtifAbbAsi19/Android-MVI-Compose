@@ -8,7 +8,7 @@ import com.mak.androidmvi.ui.core.sharedviewmodel.data.SharedViewData
 
 abstract class BaseViewModel<S : SharedViewData>(
     application: Application
-) : AndroidViewModel(application), DefaultLifecycleObserver {
+) : AndroidViewModel(application) {
 
     private var _sharedData: S? = null
     val sharedData: S?
@@ -21,16 +21,7 @@ abstract class BaseViewModel<S : SharedViewData>(
 
     open fun onSharedDataUpdated(sharedData: S?) {}
 
-    override fun onDestroy(owner: LifecycleOwner) {
-        // Clear data when NavGraph lifecycle is destroyed
-        _sharedData?.onCleared()
-        _sharedData?.clear()
-        _sharedData = null
-        super.onDestroy(owner)
-    }
-
     override fun onCleared() {
-        // When ViewModel is removed from memory
         _sharedData?.onCleared()
         _sharedData?.clear()
         _sharedData = null

@@ -36,6 +36,14 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, rootViewModel
             val appSharedViewModel: AuthSharedViewModel =
                 viewModel(appParentEntry)   //hiltViewModel(parentEntry)
 
+/*
+            val vm: AuthViewModel = navGraphViewModel(navController, "auth")
+
+            // Journey data
+            val data = remember { AuthData() }
+            LaunchedEffect(Unit) { vm.updateSharedData(data) }
+
+            // Use vm.sharedData*/
 
              val authSharedViewModel: AuthSharedViewModel =   viewModel(appParentEntry)   //hiltViewModel(parentEntry)
 
