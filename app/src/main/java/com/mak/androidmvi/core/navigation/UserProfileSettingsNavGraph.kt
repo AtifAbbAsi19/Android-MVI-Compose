@@ -4,11 +4,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.screens.update.UpdateEmailScreen
 import com.mak.androidmvi.ui.screens.update.UpdatePhoneScreen
 import com.mak.androidmvi.ui.screens.update.UploadPhotoScreen
 
-fun NavGraphBuilder.userProfileSettingsNavGraph(navController: NavHostController){
+fun NavGraphBuilder.userProfileSettingsNavGraph(
+    navController: NavHostController,
+    rootViewModel: RootViewModel
+){
 
     navigation<Destination.ProfileSettings.Root>(startDestination = Destination.ProfileSettings.UpdateEmail) {
 

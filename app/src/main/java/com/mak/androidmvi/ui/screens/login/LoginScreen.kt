@@ -46,6 +46,7 @@ import com.mak.androidmvi.designsystem.FiledState
 import com.mak.androidmvi.designsystem.InputField
 import com.mak.androidmvi.designsystem.InputFieldBuilder
 import com.mak.androidmvi.designsystem.PainterHolder
+import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 @Composable
@@ -54,7 +55,8 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     onLoginSuccess: () -> Unit,
     onSignup: () -> Unit,
-    onForgotPassword: () -> Unit
+    onForgotPassword: () -> Unit,
+    rootViewModel: RootViewModel
 ) {
 
    //first approach
@@ -272,3 +274,21 @@ fun Logo(){
         contentDescription = "splash_logo"
     )
 }
+
+/*
+rootViewModel.sendEvent(UiEvent.ShowSnackbar("Welcome back!"))
+
+rootViewModel.sendEvent(UiEvent.ShowDialog("Error", "Something went wrong"))
+
+rootViewModel.sendEvent(
+UiEvent.ShowBottomSheet {
+    Column(Modifier.padding(16.dp)) {
+        Text("This is a global bottom sheet")
+        Button(onClick = {
+            rootViewModel.sendEvent(UiEvent.DismissBottomSheet)
+        }) {
+            Text("Close")
+        }
+    }
+}
+)*/

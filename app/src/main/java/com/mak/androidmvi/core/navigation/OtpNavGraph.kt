@@ -5,9 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mak.androidmvi.ui.commonui.OtpScreen
-import com.mak.androidmvi.ui.screens.splash.SplashScreen
+import com.mak.androidmvi.ui.core.RootViewModel
 
-fun NavGraphBuilder.OtpNavGraph(navController: NavHostController){
+fun NavGraphBuilder.OtpNavGraph(navController: NavHostController, rootViewModel: RootViewModel){
 
     // Auth subgraph
     navigation<Destination.OTP.Root>(startDestination = Destination.OTP.ValidateOtp) {

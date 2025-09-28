@@ -6,10 +6,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.screens.splash.SplashScreen
 import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 
-fun NavGraphBuilder.splashNavGraph(navController: NavHostController){
+fun NavGraphBuilder.splashNavGraph(navController: NavHostController, rootViewModel: RootViewModel){
 
     // Auth subgraph
     navigation<Destination.Root>(startDestination = Destination.Splash) {
@@ -26,6 +27,7 @@ fun NavGraphBuilder.splashNavGraph(navController: NavHostController){
 
 
             SplashScreen(
+                rootViewModel= rootViewModel,
                 appSharedViewModel = appSharedViewModel,
                 onFinished = { navController.navigate(Destination.Auth.Root) {
                     popUpTo(Destination.Splash) { inclusive = true }

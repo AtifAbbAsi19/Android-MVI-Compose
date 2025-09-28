@@ -28,13 +28,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
 @Composable
 fun ForgotPasswordScreen(
     onBack: () -> Unit,
     email: String?,
-    sharedAuthViewModel: SharedAuthViewModel
+    sharedAuthViewModel: SharedAuthViewModel,
+    rootViewModel: RootViewModel
 ) {
 
 

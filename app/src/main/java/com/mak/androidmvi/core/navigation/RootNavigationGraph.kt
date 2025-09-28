@@ -1,16 +1,13 @@
 package com.mak.androidmvi.core.navigation
 
 import android.widget.Toast
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -26,22 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.createGraph
 import com.mak.androidmvi.R
-import com.mak.androidmvi.core.sharedViewModel
 import com.mak.androidmvi.designsystem.UiEvent
 import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.core.BottomNavigationBar
 import com.mak.androidmvi.ui.core.RootViewModel
-import com.mak.androidmvi.ui.core.baseviewmodel.model.BaseData
-import com.mak.androidmvi.ui.core.sharedviewmodel.SharedViewModel
 import com.mak.androidmvi.ui.extensions.LocalContext
 import com.mak.androidmvi.ui.screens.home.HomeTopAppBar
-import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 import kotlin.reflect.KClass
 
 
@@ -54,7 +45,7 @@ import kotlin.reflect.KClass
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RootNavigationGraph( rootViewModel: RootViewModel = viewModel()) {
+fun RootNavigationGraph(rootViewModel: RootViewModel = viewModel()) {
 
     // Observe the current back stack entry
     val rootNavController = rememberNavController()
@@ -192,15 +183,15 @@ fun RootNavigationGraph( rootViewModel: RootViewModel = viewModel()) {
            // popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) }
         ) {
 
-            splashNavGraph(rootNavController)
+            splashNavGraph(rootNavController , rootViewModel)
 
-            authNavGraph(rootNavController)
+            authNavGraph(rootNavController, rootViewModel)
 
-            OtpNavGraph(rootNavController)
+            OtpNavGraph(rootNavController, rootViewModel)
 
-            dashboardNavGraph(rootNavController)
+            dashboardNavGraph(rootNavController, rootViewModel)
 
-            userProfileSettingsNavGraph(rootNavController)
+            userProfileSettingsNavGraph(rootNavController, rootViewModel)
 
         }//end of NavHost
     }

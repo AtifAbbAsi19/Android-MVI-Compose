@@ -15,12 +15,16 @@ import com.mak.androidmvi.ui.screens.search.SearchScreen
 import com.mak.androidmvi.ui.screens.setting.SettingsScreen
 import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.core.BottomNavigationBar
+import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.screens.home.HomeTopAppBar
 import com.mak.androidmvi.ui.screens.success.PaymentSuccessScreen
 import com.mak.androidmvi.ui.viewmodel.HomeSharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
-fun NavGraphBuilder.dashboardNavGraph(navController: NavHostController){
+fun NavGraphBuilder.dashboardNavGraph(
+    navController: NavHostController,
+    rootViewModel: RootViewModel
+){
 
         navigation<Destination.Dashboard.Root>(startDestination = Destination.Dashboard.Home) {
 

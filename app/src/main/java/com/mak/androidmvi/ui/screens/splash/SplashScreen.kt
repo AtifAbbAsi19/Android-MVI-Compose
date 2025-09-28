@@ -15,11 +15,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mak.androidmvi.core.asPainter
+import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(onFinished: () -> Unit, appSharedViewModel: AppSharedViewModel) {
+fun SplashScreen(
+    onFinished: () -> Unit,
+    appSharedViewModel: AppSharedViewModel,
+    rootViewModel: RootViewModel
+) {
 
     val viewModel: SplashViewModel = viewModel()
 
