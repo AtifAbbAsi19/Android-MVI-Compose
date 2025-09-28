@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
+import com.mak.androidmvi.ui.viewmodel.auth.AuthSharedViewModel
 
 @Composable
 fun SignupScreen(
@@ -39,13 +39,13 @@ fun SignupScreen(
     onGoToOtp: () -> Unit,
     onConfirmationScreen: () -> Unit,
     successId: String?,
-    sharedAuthViewModel: SharedAuthViewModel
+    authSharedViewModel: AuthSharedViewModel
 ) {
 
     // Make column scrollable
     val scrollState = rememberScrollState()
 
-    val state by sharedAuthViewModel.uiState.collectAsState()
+    val state by authSharedViewModel.uiState.collectAsState()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -70,7 +70,7 @@ fun SignupScreen(
     LaunchedEffect(key1 = Unit) {
         if (!hasLaunched.value) {
         Log.d("appLog",state.pageInfo)
-        sharedAuthViewModel.updatePage("signuppage")
+        authSharedViewModel.updatePage("signuppage")
     }
     }
 

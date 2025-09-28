@@ -11,7 +11,7 @@ import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.screens.forgotpassword.ForgotPasswordScreen
 import com.mak.androidmvi.ui.screens.login.LoginScreen
 import com.mak.androidmvi.ui.screens.login.LoginViewModel
-import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
+import com.mak.androidmvi.ui.viewmodel.auth.AuthSharedViewModel
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController, rootViewModel: RootViewModel) {
 
@@ -33,18 +33,18 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, rootViewModel
                 navController.getBackStackEntry(route)
             }
 
-            val appSharedViewModel: SharedAuthViewModel =
+            val appSharedViewModel: AuthSharedViewModel =
                 viewModel(appParentEntry)   //hiltViewModel(parentEntry)
 
 
-             val sharedAuthViewModel: SharedAuthViewModel =   viewModel(appParentEntry)   //hiltViewModel(parentEntry)
+             val authSharedViewModel: AuthSharedViewModel =   viewModel(appParentEntry)   //hiltViewModel(parentEntry)
 
             val loginViewModel: LoginViewModel = viewModel(backStackEntry)
 
             LoginScreen(
                 rootViewModel = rootViewModel,
                 viewModel = loginViewModel,
-                sharedAuthViewModel = sharedAuthViewModel,
+                authSharedViewModel = authSharedViewModel,
                 onLoginSuccess = {
                     navController.navigate(Destination.Dashboard.Root) {
                         popUpTo(Destination.Auth.Root) { inclusive = true }
@@ -65,13 +65,13 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, rootViewModel
                 navController.getBackStackEntry(Destination.Auth.Root)
             }
 
-            val sharedAuthViewModel: SharedAuthViewModel =
+            val authSharedViewModel: AuthSharedViewModel =
                 viewModel(parentEntry)   //hiltViewModel(parentEntry)
 
 
             ForgotPasswordScreen(
                 rootViewModel = rootViewModel,
-                sharedAuthViewModel = sharedAuthViewModel,
+                authSharedViewModel = authSharedViewModel,
                 email = args.email,
                 onBack = { navController.popBackStack() }
             )

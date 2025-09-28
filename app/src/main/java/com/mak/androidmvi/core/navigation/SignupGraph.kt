@@ -11,7 +11,7 @@ import androidx.navigation.toRoute
 import com.mak.androidmvi.ui.screens.signup.SignupScreen
 import com.mak.androidmvi.ui.screens.signup.SignupSuccess
 import com.mak.androidmvi.ui.extensions.safeEmpty
-import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
+import com.mak.androidmvi.ui.viewmodel.auth.AuthSharedViewModel
 
 
 fun NavGraphBuilder.signupGraph(navController: NavHostController){
@@ -30,11 +30,11 @@ fun NavGraphBuilder.signupGraph(navController: NavHostController){
                 navController.getBackStackEntry(Destination.Auth.Root)
             }
 
-            val sharedAuthViewModel: SharedAuthViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
+            val authSharedViewModel: AuthSharedViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
 
 
             SignupScreen(
-                sharedAuthViewModel = sharedAuthViewModel,
+                authSharedViewModel = authSharedViewModel,
                 successId = result.value,
                 onBack = { navController.popBackStack() },
                 onGoToOtp = {
@@ -55,12 +55,12 @@ fun NavGraphBuilder.signupGraph(navController: NavHostController){
                 navController.getBackStackEntry(Destination.Auth.Root)
             }
 
-            val sharedAuthViewModel: SharedAuthViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
+            val authSharedViewModel: AuthSharedViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
 
 
 
             SignupSuccess(
-                sharedAuthViewModel = sharedAuthViewModel,
+                authSharedViewModel = authSharedViewModel,
                 successId = args.successId.safeEmpty(),
                 onLogin = {
                     navController.navigate(Destination.Auth.Root)

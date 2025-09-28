@@ -1,4 +1,4 @@
-package com.mak.androidmvi.ui.viewmodel
+package com.mak.androidmvi.ui.viewmodel.auth
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class SharedAuthViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+class AuthSharedViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState

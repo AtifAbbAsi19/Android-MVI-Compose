@@ -29,18 +29,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mak.androidmvi.ui.core.RootViewModel
-import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
+import com.mak.androidmvi.ui.viewmodel.auth.AuthSharedViewModel
 
 @Composable
 fun ForgotPasswordScreen(
     onBack: () -> Unit,
     email: String?,
-    sharedAuthViewModel: SharedAuthViewModel,
+    authSharedViewModel: AuthSharedViewModel,
     rootViewModel: RootViewModel
 ) {
 
 
-    val sharedViewModel by sharedAuthViewModel.uiState.collectAsStateWithLifecycle()
+    val sharedViewModel by authSharedViewModel.uiState.collectAsStateWithLifecycle()
     val hasLaunched = remember { mutableStateOf(false) }
 
 
@@ -67,7 +67,7 @@ fun ForgotPasswordScreen(
         if (!hasLaunched.value) {
             Log.d("appLog1", sharedViewModel.pageInfo)
 
-            sharedAuthViewModel.updatePage("loginPage")
+            authSharedViewModel.updatePage("loginPage")
         }
     }
 

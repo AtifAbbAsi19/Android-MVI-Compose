@@ -47,11 +47,11 @@ import com.mak.androidmvi.designsystem.InputField
 import com.mak.androidmvi.designsystem.InputFieldBuilder
 import com.mak.androidmvi.designsystem.PainterHolder
 import com.mak.androidmvi.ui.core.RootViewModel
-import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
+import com.mak.androidmvi.ui.viewmodel.auth.AuthSharedViewModel
 
 @Composable
 fun LoginScreen(
-    sharedAuthViewModel: SharedAuthViewModel = viewModel(),
+    authSharedViewModel: AuthSharedViewModel = viewModel(),
     viewModel: LoginViewModel = viewModel(),
     onLoginSuccess: () -> Unit,
     onSignup: () -> Unit,
@@ -70,7 +70,7 @@ fun LoginScreen(
     // Make column scrollable
     val scrollState = rememberScrollState()
 
-    val sharedViewModel by sharedAuthViewModel.uiState.collectAsStateWithLifecycle()
+    val sharedViewModel by authSharedViewModel.uiState.collectAsStateWithLifecycle()
 
 
    // val emailPainterHolder = PainterHolder(painterResource(state.emailLeadingIcon))
@@ -114,10 +114,10 @@ fun LoginScreen(
             Unit -> {
                 Log.d("appLog1",sharedViewModel.pageInfo)
 
-                sharedAuthViewModel.updatePage("loginPage")
+                authSharedViewModel.updatePage("loginPage")
             }
             null -> {
-                sharedAuthViewModel.updatePage("loginPage")
+                authSharedViewModel.updatePage("loginPage")
             }
         }
     }
