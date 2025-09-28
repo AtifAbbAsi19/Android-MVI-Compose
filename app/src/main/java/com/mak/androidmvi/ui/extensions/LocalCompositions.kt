@@ -19,4 +19,4 @@ data class AppConfig(
 val LocalAppConfig = compositionLocalOf { AppConfig() }
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { error("No Nav Host Controller Found") }
-val LocalContext = staticCompositionLocalOf<Context?> { error("App Context not Found") }
+//val LocalContext = staticCompositionLocalOf<Context?> { error("App Context not Found") }

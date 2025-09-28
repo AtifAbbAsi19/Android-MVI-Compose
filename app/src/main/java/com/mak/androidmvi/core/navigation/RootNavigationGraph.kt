@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -31,7 +32,6 @@ import com.mak.androidmvi.designsystem.UiEvent
 import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.core.BottomNavigationBar
 import com.mak.androidmvi.ui.core.RootViewModel
-import com.mak.androidmvi.ui.extensions.LocalContext
 import com.mak.androidmvi.ui.screens.home.HomeTopAppBar
 import kotlin.reflect.KClass
 

@@ -34,9 +34,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.mak.androidmvi.ui.core.BottomNavigationBar
-import com.mak.androidmvi.ui.extensions.LocalContext
+//import com.mak.androidmvi.ui.extensions.LocalContext
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

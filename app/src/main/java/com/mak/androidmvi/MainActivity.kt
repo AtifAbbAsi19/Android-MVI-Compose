@@ -93,13 +93,13 @@ class MainActivity : ComponentActivity() {
                 }*/
 
                 //App Context
-                val context = LocalContext.current
+                //val context = LocalContext.current
 
                 // Provide the app configuration for the entire composable hierarchy
                 CompositionLocalProvider(
                     LocalAppConfig provides AppConfig(isDebugMode = true),
                     LocalNavController provides rootNavController,
-                    LocalContext provides context
+                  //  LocalContext provides context
                 ) {
 
                     // Provides a coroutine scope for displaying snackbar.
