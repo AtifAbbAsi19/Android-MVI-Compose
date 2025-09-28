@@ -13,33 +13,38 @@ import com.mak.androidmvi.ui.screens.login.LoginScreen
 import com.mak.androidmvi.ui.screens.login.LoginViewModel
 import com.mak.androidmvi.ui.viewmodel.SharedAuthViewModel
 
-fun NavGraphBuilder.authNavGraph(navController: NavHostController, rootViewModel: RootViewModel){
+fun NavGraphBuilder.authNavGraph(navController: NavHostController, rootViewModel: RootViewModel) {
 
     // Auth subgraph
     navigation<Destination.Auth.Root>(startDestination = Destination.Auth.Login) {
-        composable<Destination.Auth.Login> { backStackEntry->
+        composable<Destination.Auth.Login> { backStackEntry ->
 
-        /*    //  Scope the SharedAuthViewModel to the Auth.Root graph
-            val appEntry = remember(backStackEntry) {
-                navController.getBackStackEntry(Destination.Root)
-            }
+            /* val route = Destination.Auth.Root::class.simpleName
+             println(route) // "Root"*/
 
-            val appSharedViewModel: AppSharedViewModel =   viewModel(appEntry)   //hiltViewModel(parentEntry)
-*/
+            val route = Destination.Auth.Root::class.qualifiedName ?: ""
+            println(route) // "com.package.Destination.Auth.Root"
+
+
+            // val sharedViewModel: SharedAuthViewModel = viewModel(parentEntry)
 
             //  Scope the SharedAuthViewModel to the Auth.Root graph
-            val parentEntry = remember(backStackEntry) {
-                navController.getBackStackEntry(Destination.Auth.Root)
+            val appParentEntry = remember(backStackEntry) {
+                navController.getBackStackEntry(route)
             }
 
-           // val sharedAuthViewModel: SharedAuthViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
+            val appSharedViewModel: SharedAuthViewModel =
+                viewModel(appParentEntry)   //hiltViewModel(parentEntry)
 
-            val loginViewModel: LoginViewModel = viewModel(parentEntry)
+
+             val sharedAuthViewModel: SharedAuthViewModel =   viewModel(appParentEntry)   //hiltViewModel(parentEntry)
+
+            val loginViewModel: LoginViewModel = viewModel(backStackEntry)
 
             LoginScreen(
                 rootViewModel = rootViewModel,
                 viewModel = loginViewModel,
-                //sharedAuthViewModel = sharedAuthViewModel,
+                sharedAuthViewModel = sharedAuthViewModel,
                 onLoginSuccess = {
                     navController.navigate(Destination.Dashboard.Root) {
                         popUpTo(Destination.Auth.Root) { inclusive = true }
@@ -60,7 +65,8 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, rootViewModel
                 navController.getBackStackEntry(Destination.Auth.Root)
             }
 
-            val sharedAuthViewModel: SharedAuthViewModel =   viewModel(parentEntry)   //hiltViewModel(parentEntry)
+            val sharedAuthViewModel: SharedAuthViewModel =
+                viewModel(parentEntry)   //hiltViewModel(parentEntry)
 
 
             ForgotPasswordScreen(
