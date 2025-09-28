@@ -1,16 +1,27 @@
 package com.mak.androidmvi.core.navigation
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -22,10 +33,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import com.mak.androidmvi.R
 import com.mak.androidmvi.core.sharedViewModel
+import com.mak.androidmvi.designsystem.UiEvent
 import com.mak.androidmvi.ui.core.AppScaffold
 import com.mak.androidmvi.ui.core.BottomNavigationBar
+import com.mak.androidmvi.ui.core.RootViewModel
 import com.mak.androidmvi.ui.core.baseviewmodel.model.BaseData
 import com.mak.androidmvi.ui.core.sharedviewmodel.SharedViewModel
+import com.mak.androidmvi.ui.extensions.LocalContext
 import com.mak.androidmvi.ui.screens.home.HomeTopAppBar
 import com.mak.androidmvi.ui.viewmodel.AppSharedViewModel
 import kotlin.reflect.KClass
@@ -40,7 +54,7 @@ import kotlin.reflect.KClass
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RootNavigationGraph() {
+fun RootNavigationGraph( rootViewModel: RootViewModel = viewModel()) {
 
     // Observe the current back stack entry
     val rootNavController = rememberNavController()
@@ -68,6 +82,57 @@ fun RootNavigationGraph() {
     // Or a more direct approach using hasRoute for each item,
     // which works well when you have a small, fixed number of routes.
     val showDashboardToolbar = currentDestination?.hasRoute<Destination.Dashboard.Home>() ?: false
+
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+
+    // Local states for dialog & bottom sheet
+    var dialogState by remember { mutableStateOf<UiEvent.ShowDialog?>(null) }
+    var bottomSheetContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+
+    val bottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+
+    // Collect one-off events
+    LaunchedEffect(Unit) {
+        rootViewModel.uiEvents.collect { event ->
+            when (event) {
+                is UiEvent.ShowSnackbar -> {
+                    snackbarHostState.showSnackbar(
+                        message = event.message,
+                        actionLabel = event.actionLabel
+                    )
+                }
+
+                is UiEvent.ShowToast -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is UiEvent.ShowDialog -> {
+                    dialogState = event
+                }
+
+                UiEvent.DismissDialog -> {
+                    dialogState = null
+                }
+
+                is UiEvent.ShowBottomSheet -> {
+                    bottomSheetContent = event.content
+                }
+
+                UiEvent.DismissBottomSheet -> {
+                    bottomSheetContent = null
+                }
+
+                is UiEvent.Navigate -> {
+                    rootNavController.navigate(event.route)
+                }
+            }
+        }
+    }
+
 
 
     AppScaffold(
@@ -138,6 +203,32 @@ fun RootNavigationGraph() {
             userProfileSettingsNavGraph(rootNavController)
 
         }//end of NavHost
+    }
+
+
+
+    // ---------- Dialog Handling ----------
+    dialogState?.let { dialog ->
+        AlertDialog(
+            onDismissRequest = { rootViewModel.sendEvent(UiEvent.DismissDialog) },
+            title = { Text(dialog.title) },
+            text = { Text(dialog.message) },
+            confirmButton = {
+                TextButton(onClick = { rootViewModel.sendEvent(UiEvent.DismissDialog) }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+
+    // ---------- BottomSheet Handling ----------
+    if (bottomSheetContent != null) {
+        ModalBottomSheet(
+            onDismissRequest = { rootViewModel.sendEvent(UiEvent.DismissBottomSheet) },
+            sheetState = bottomSheetState
+        ) {
+            bottomSheetContent?.invoke()
+        }
     }
 
 }

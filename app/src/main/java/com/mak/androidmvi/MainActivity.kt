@@ -43,15 +43,15 @@ import com.mak.androidmvi.ui.screens.splash.SplashViewModel
 import com.mak.androidmvi.ui.theme.AndroidMviTheme
 import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
-//class MainActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen() // Keep the splash screen visible
-       // val splashScreen = installSplashScreen()
-        //val splashViewModel = SplashViewModel()
+
+     /*   val splashScreen = installSplashScreen()
+        val splashViewModel = SplashViewModel()
         // Keep the splash screen on display until isLoading is false
-      //  splashScreen.setKeepOnScreenCondition { splashViewModel.uiState.value.isLoading }
+        splashScreen.setKeepOnScreenCondition { splashViewModel.uiState.value.isLoading }
+        */
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
