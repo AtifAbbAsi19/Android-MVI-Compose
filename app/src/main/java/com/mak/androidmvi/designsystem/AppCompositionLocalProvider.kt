@@ -10,7 +10,7 @@ import com.mak.androidmvi.ui.extensions.AppConfig
 import com.mak.androidmvi.ui.extensions.LocalAppConfig
 import com.mak.androidmvi.ui.extensions.LocalNavController
 
-
+//https://composables.com/docs/androidx.compose.material3/material3/components/LinearWavyProgressIndicator
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppCompositionLocalProvider(
