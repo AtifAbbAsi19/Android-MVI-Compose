@@ -1,7 +1,8 @@
 package com.mak.androidmvi.ui.core
 
+
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,7 +18,7 @@ fun SmallDefaultTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior?) 
         title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = { }) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
         },
         scrollBehavior = scrollBehavior
