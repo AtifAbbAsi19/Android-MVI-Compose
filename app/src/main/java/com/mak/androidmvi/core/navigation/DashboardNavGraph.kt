@@ -56,7 +56,7 @@ fun NavGraphBuilder.dashboardNavGraph(
                    // val safePadding = innerPadding ?: PaddingValues(0.dp)
 
                     HomeScreen(
-                            modifier = Modifier,
+                           // modifier = Modifier,
                              //   .then(
                                //     Modifier.padding(safePadding)
                                // ),

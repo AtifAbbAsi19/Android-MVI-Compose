@@ -43,7 +43,7 @@ import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, viewModel: ViewModel) {
+fun HomeScreen( scrollBehavior: TopAppBarScrollBehavior?, viewModel: ViewModel) {
 
 
     /*  val items = listOf(
@@ -82,7 +82,7 @@ fun HomeScreen(modifier: Modifier, scrollBehavior: TopAppBarScrollBehavior?, vie
 
     LazyColumn(
         verticalArrangement = Arrangement.Top,
-        modifier = modifier
+        modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(
